@@ -2,7 +2,7 @@
     "name": "bizley/ajaxdropdown",
     "type": "yii2-extension",
     "description": "Bootstrap dropdown list with AJAX data.",
-    "keywords": ["yii2", "ajaxdropdown", "bootstrap", "ajax", "dropdown"],
+    "keywords": ["yii2", "widget", "ajaxdropdown", "bootstrap", "ajax", "dropdown"],
     "license": "BSD-3-Clause",
     "support": {
         "source": "https://github.com/bizley-code/Yii2-AjaxDropDown"
