@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 0.1-alpha
+ * @version 1.0
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
@@ -24,7 +24,7 @@ use yii\helpers\Json;
  * @see http://www.yiiframework.com
  * @see https://github.com/yiisoft/yii2
  *
- * If you look for the Yii 1.1 version of this widget
+ * For Yii 1.1 version of this widget
  * @see https://github.com/bizley-code/Yii-AjaxDropDown
 */
 class AjaxDropdown extends Widget
@@ -32,17 +32,17 @@ class AjaxDropdown extends Widget
 
     /**
      * @var string Additional HTML code for the selected value row, default ''.
-     * Any 'additional' key in 'data' parameter element will replace this.
-     * You can use {VALUE} and {ID} tags here to be automatically replaced with 
-     * selected id and value of the row.
-     * @see $data
+     * Any 'additional' key in [[data]] parameter element will replace this.
+     * Any {VALUE} and {ID} tags here are automatically replaced with selected 
+     * id and value of the row.
+     * @see [[data]]
      */
     public $additionalCode = '';
 
     /**
      * @var string The attribute associated with this widget.
      * The square brackets ('[]') are added automatically to collect tabular 
-     * data input when singleMode parameter is set to false (default).
+     * data input when [[singleMode]] parameter is set to false (default).
      */
     public $attribute;
 
@@ -53,8 +53,8 @@ class AjaxDropdown extends Widget
     public $buttonClass;
 
     /**
-     * @var string HTML label of the button triggering the dropdown, 
-     * default '<span class="caret"></span>'.
+     * @var string HTML label of the button triggering the dropdown, default 
+     * '<span class="caret"></span>'.
      */
     public $buttonLabel;
 
@@ -85,8 +85,8 @@ class AjaxDropdown extends Widget
      * If not 0 and not 1 'mark' is set to 0.
      * If empty 'value' is set to 'error: missing value key in data array'.
      * There is the optional parameter 'additional' with HTML code to be 
-     * inserted in the selected row. If given this replaces 'additionalCode' 
-     * for that row only. In case you want to remove the 'additionalCode' only 
+     * inserted in the selected row. If given this replaces [[additionalCode]] 
+     * for that row only. In case you want to remove the [[additionalCode]] only 
      * for that row set the 'additional' key to false.
      */
     public $data;
@@ -112,7 +112,7 @@ class AjaxDropdown extends Widget
     /**
      * @var array HTML options of the extra button between input text field and 
      * triggering button, default [].
-     * @see $options in Html::button
+     * @see Html::button()
      */
     public $extraButtonOptions = [];
 
@@ -147,12 +147,6 @@ class AjaxDropdown extends Widget
     public $headerStyle;
 
     /**
-     * @var string CSS class of the hidden element on the results list.
-     * Bootstrap default is 'hidden'.
-     */
-    public $hiddenClass;
-
-    /**
      * @var string CSS class of the input text field in addition to 
      * 'form-control'.
      */
@@ -177,7 +171,7 @@ class AjaxDropdown extends Widget
 
     /**
      * @var array Array of translated strings used in widgets, default [].
-     * @see $defaultLocal List of all default English strings.
+     * @see [[defaultLocal]]
      */
     public $local = [];
 
@@ -211,12 +205,12 @@ class AjaxDropdown extends Widget
     public $minQuery = 0;
 
     /**
-     * @var CModel Data model associated with this widget.
+     * @var \yii\base\Model Data model associated with this widget.
      */
     public $model;
 
     /**
-     * @var string Widget name. This must be set if $model is not set.
+     * @var string Widget name. This must be set if [[model]] is not set.
      */
     public $name;
 
@@ -296,6 +290,7 @@ class AjaxDropdown extends Widget
     /**
      * @var string HTML string of the loading results indicator, default 
      * '<div class="progress" style="width:90%;margin:0 auto"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:100%">{LOADING}</div></div>'.
+     * {LOADING} tag used here is replaced with translated 'Loading' string.
      */
     public $progressBar;
 
@@ -371,7 +366,7 @@ class AjaxDropdown extends Widget
     public $singleMode = false;
 
     /**
-     * @var mixed URL of the AJAX source of records. It can be string or array.
+     * @var string URL of the AJAX source of records.
      */
     public $source;
 
@@ -389,7 +384,7 @@ class AjaxDropdown extends Widget
 
     /**
      * @var string Name of the translate category, default 'app'.
-     * @see BaseYii::t
+     * @see Yii::t()
      */
     public $translateCategory = 'app';
 
@@ -426,8 +421,8 @@ class AjaxDropdown extends Widget
 
     /**
      * @var array Default English widget texts.
-     * {NUM} tag will be automatically replaced with 'minQuery' value for the 
-     * 'minimumCharacters' key.
+     * {NUM} tag is automatically replaced with value of [[minQuery]] in the 
+     * 'minimumCharacters' element.
      */
     protected $defaultLocal = [
         'allRecords'        => 'All records',
@@ -444,7 +439,6 @@ class AjaxDropdown extends Widget
      */
     protected $defaults = [
         'buttonClass'   => 'ajaxDropDownToggle',
-        'buttonLabel'   => '...',
         'groupClass'    => 'ajaxDropDown',
         'inputName'     => 'ajaxDropDownInput',
         'mainClass'     => 'ajaxDropDownWidget',
@@ -470,7 +464,6 @@ class AjaxDropdown extends Widget
         else {
             return $this->bootstrapDefaults['buttonLabel'];
         }
-        return !empty($this->defaults['buttonLabel']) ? $this->defaults['buttonLabel'] : '';
     }
 
     /**
@@ -596,11 +589,9 @@ class AjaxDropdown extends Widget
         if (!empty($this->bootstrapDefaults['resultStyle'])) {
             $style .= $this->bootstrapDefaults['resultStyle'];
         }
-
         if (!empty($this->resultClass) && is_string($this->resultClass)) {
             $class .= ' ' . $this->resultClass;
         }
-
         if (!empty($this->resultStyle) && is_string($this->resultStyle)) {
             $style .= ' ' . $this->resultStyle;
         }
@@ -676,15 +667,12 @@ class AjaxDropdown extends Widget
      */
     protected function prepareOption($name)
     {
-        $option = '';
         if (!empty($this->$name) && is_string($this->$name)) {
-            $option = $this->$name;
+            return $this->$name;
         }
         else {
-            $option = !empty($this->bootstrapDefaults[$name]) ? $this->bootstrapDefaults[$name] : '';
+            return !empty($this->bootstrapDefaults[$name]) ? $this->bootstrapDefaults[$name] : '';
         }
-
-        return $option;
     }
 
     /**
@@ -739,14 +727,12 @@ class AjaxDropdown extends Widget
      */
     protected function prepareOptionProgressBar()
     {
-        $progressBar = '';
         if (!empty($this->progressBar) && is_string($this->progressBar)) {
-            $progressBar = $this->progressBar;
+            return strtr($this->progressBar, ['{LOADING}' => \Yii::t($this->translateCategory, 'Loading')]);
         }
         else {
-            $progressBar = !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], ['{LOADING}' => \Yii::t($this->translateCategory, 'Loading')]) : '';
+            return !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], ['{LOADING}' => \Yii::t($this->translateCategory, 'Loading')]) : '';
         }
-        return $progressBar;
     }
 
     /**

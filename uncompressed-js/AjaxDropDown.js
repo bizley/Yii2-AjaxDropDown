@@ -1,8 +1,8 @@
 /*!
- * AjaxDropDown v1.1.1
+ * AjaxDropDown v1.0
  * Paweł Bizley Brzozowski
- * https://github.com/bizley-code/Yii-AjaxDropDown
- * http://www.yiiframework.com/extension/ajaxdropdown
+ * https://github.com/bizley-code/Yii2-AjaxDropDown
+ * http://www.yiiframework.com/extension/yii2-ajaxdropdown
  */
 (function ($) {
     $.fn.ajaxDropDown = function (options) {
@@ -52,44 +52,52 @@
                 nrec: 'No matching records found'
             }
         }, options);
+        var li = '</li>';
+        var lih = '<li class="dropdown-header';
+        var st = ' style="';
+        var ali = '</a></li>';
+        var dis = 'disabled';
+        var di = ' ' + dis;
+        var hid = 'hidden';
         var ul = this.find('ul.ajaxDropDownMenu');
         var prba = '<li class="ajaxDropDownLoading';
         if (set.locl !== '') prba += ' ' + set.locl;
         prba += '"';
-        if (set.lost !== '') prba += ' style="' + set.lost + '"';
-        prba += '>' + set.prba + '</li>';
-        var headerStart = '<li class="dropdown-header';
+        if (set.lost !== '') prba += st + set.lost + '"';
+        prba += '>' + set.prba + li;
+        var headerStart = lih;
         if (set.hecl !== '') headerStart += ' ' + set.hecl;
         headerStart += '"';
-        if (set.hest !== '') headerStart += ' style="' + set.hest + '"';
+        if (set.hest !== '') headerStart += st + set.hest + '"';
         headerStart += '>';
         var headerMinimumCharacters = set.loca.mcha.replace(/{NUM}/g, set.minq);
-        var erro = '<li class="dropdown-header';
+        var erro = lih;
         if (set.ercl !== '') erro += ' ' + set.ercl;
         erro += '"';
-        if (set.erst !== '') erro += ' style="' + set.erst + '"';
-        erro += '>' + set.loca.erro + '</li>';
-        var nrec = '<li class="dropdown-header';
+        if (set.erst !== '') erro += st + set.erst + '"';
+        erro += '>' + set.loca.erro + li;
+        var nrec = lih;
         if (set.nrcl !== '') nrec += ' ' + set.nrcl;
         nrec += '"';
-        if (set.nrst !== '') nrec += ' style="' + set.nrst + '"';
-        nrec += '>' + set.loca.nrec + '</li>';
+        if (set.nrst !== '') nrec += st + set.nrst + '"';
+        nrec += '>' + set.loca.nrec + li;
         this.on('show.bs.dropdown', function(){
             if (ul.find('li.ajaxDropDownPages').length === 0) {
                 var page = $(this).find('button.ajaxDropDownToggle').data('page');
                 page = page * 1;
                 var search = false;
-                var header = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
+                var hst = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
+                var header = hst;
                 header += set.paen + set.loca.allr + '</li><li class="divider"></li>' + prba;
                 var query = $(this).find('input[type=text]').val();
                 if (set.minq > 0) {
                     if (query.length >= set.minq) {
-                        header = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
+                        header = hst;
                         header += set.paen + set.loca.rcon + ' <strong>' + query;
                         header += '</strong></li><li class="divider"></li>' + prba;
                         search = true;
                     }
-                    else header = headerStart + headerMinimumCharacters + '</li>';
+                    else header = headerStart + headerMinimumCharacters + li;
                 }
                 else search = true;
                 ul.html(header);
@@ -107,34 +115,34 @@
                                     if (set.recl !== '') result += ' ' + set.recl;
                                     if (ul.parent().parent().parent().find('li.ajaxDropDownSelected' + results.data[i].id).length) result += ' active';
                                     result += '"';
-                                    if (set.rest !== '') result += ' style="' + set.rest + '"';
+                                    if (set.rest !== '') result += st + set.rest + '"';
                                     result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
                                     if (results.data[i].mark) result += set.mabe;
                                     result += results.data[i].value;
                                     if (results.data[i].mark) result += set.maen;
-                                    result += '</a></li>';
+                                    result += ali;
                                     ul.append(result);
                                 }
                                 if (results.total > 1) {
                                     var pages = '<li class="divider ajaxDropDownInfo"></li><li class="ajaxDropDownInfo';
                                     if (set.swcl !== '') pages += ' ' + set.swcl;
                                     pages += '"';
-                                    if (set.swst !== '') pages += ' style="' + set.swst + '"';
+                                    if (set.swst !== '') pages += st + set.swst + '"';
                                     pages += '><a href="#" class="ajaxDropDownPrev';
                                     if (set.prcl !== '') pages += ' ' + set.prcl;
                                     if (results.page === 1) {
-                                        pages += ' disabled';
+                                        pages += di;
                                     }
                                     pages += '"';
-                                    if (set.prst !== '') pages += ' style="' + set.prst + '"';
+                                    if (set.prst !== '') pages += st + set.prst + '"';
                                     pages += '>' + set.prbe + set.loca.prev + set.pren + '</a><a href="#" class="ajaxDropDownNext';
                                     if (set.necl !== '') pages += ' ' + set.necl;
                                     if (results.page === results.total) {
-                                       pages += ' disabled';
+                                       pages += di;
                                     }
                                     pages += '"';
-                                    if (set.nest !== '') pages += ' style="' + set.nest + '"';
-                                    pages += '>' + set.nebe + set.loca.next + set.neen + '</a></li>';
+                                    if (set.nest !== '') pages += st + set.nest + '"';
+                                    pages += '>' + set.nebe + set.loca.next + set.neen + ali;
                                     ul.append(pages);
                                 }
                             }
@@ -147,14 +155,14 @@
         this.on('click', 'a.ajaxDropDownNext', function(e){
             e.preventDefault();
             e.stopPropagation();
-            ul.find('a.ajaxDropDownPrev').removeClass('disabled');
-            ul.find('a.ajaxDropDownNext').addClass('disabled');
+            ul.find('a.ajaxDropDownPrev').removeClass(dis);
+            ul.find('a.ajaxDropDownNext').addClass(dis);
             var page = ul.parent().find('button.ajaxDropDownToggle').data('page');
             page = page * 1 + 1;
             if (ul.find('li.ajaxDropDownPage' + page).length) {
-                ul.find('li.ajaxDropDownPages').addClass('hidden');
-                ul.find('li.ajaxDropDownPage' + page).removeClass('hidden');
-                ul.find('a.ajaxDropDownNext').removeClass('disabled');
+                ul.find('li.ajaxDropDownPages').addClass(hid);
+                ul.find('li.ajaxDropDownPage' + page).removeClass(hid);
+                ul.find('a.ajaxDropDownNext').removeClass(dis);
             }
             else {
                 var query = ul.parent().parent().find('input[type=text]').val();
@@ -163,7 +171,7 @@
                     done(function(data){
                         var results = $.parseJSON(data);
                         if (results.data.length) {
-                            ul.find('.ajaxDropDownPages').addClass('hidden');
+                            ul.find('.ajaxDropDownPages').addClass(hid);
                             if (results.total === undefined) results.total = 1;
                             if (results.page === undefined) results.page = 1;
                             for (i in results.data) {
@@ -171,15 +179,15 @@
                                 if (set.recl !== '') result += ' ' + set.recl;
                                 if (ul.parent().parent().parent().find('li.ajaxDropDownSelected' + results.data[i].id).length) result += ' active';
                                 result += '"';
-                                if (set.rest !== '') result += ' style="' + set.rest + '"';
+                                if (set.rest !== '') result += st + set.rest + '"';
                                 result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
                                 if (results.data[i].mark) result += set.mabe;
                                 result += results.data[i].value;
                                 if (results.data[i].mark) result += set.maen;
-                                result += '</a></li>';
+                                result += ali;
                                 ul.find('.divider.ajaxDropDownInfo').before(result);
                             }
-                            if (results.page < results.total) ul.find('a.ajaxDropDownNext').removeClass('disabled');
+                            if (results.page < results.total) ul.find('a.ajaxDropDownNext').removeClass(dis);
                             else page = results.total;
                         }
                         else ul.append(nrec);
@@ -191,14 +199,14 @@
         this.on('click', 'a.ajaxDropDownPrev', function(e){
             e.preventDefault();
             e.stopPropagation();
-            ul.find('a.ajaxDropDownNext').removeClass('disabled');
-            ul.find('a.ajaxDropDownPrev').addClass('disabled');
+            ul.find('a.ajaxDropDownNext').removeClass(dis);
+            ul.find('a.ajaxDropDownPrev').addClass(dis);
             var page = ul.parent().find('button.ajaxDropDownToggle').data('page');
             page = page * 1 - 1;
             if (page < 1) page = 1;
-            ul.find('li.ajaxDropDownPages').addClass('hidden');
-            ul.find('li.ajaxDropDownPage' + page).removeClass('hidden');
-            if (page > 1) ul.find('a.ajaxDropDownPrev').removeClass('disabled');
+            ul.find('li.ajaxDropDownPages').addClass(hid);
+            ul.find('li.ajaxDropDownPage' + page).removeClass(hid);
+            if (page > 1) ul.find('a.ajaxDropDownPrev').removeClass(dis);
             ul.parent().find('button.ajaxDropDownToggle').data('page', page);
             ul.find('span.ajaxDropDownPageNumber').text(page);
         });
@@ -227,12 +235,18 @@
                 var selected = '<li class="ajaxDropDownSelected' + id;
                 if (set.rscl !== '') selected += ' ' + set.rscl;
                 selected += '"';
-                if (set.rsst !== '') selected += ' style="' + set.rsst + '"';
+                if (set.rsst !== '') selected += st + set.rsst + '"';
                 selected += '><a href="#" class="ajaxDropDownRemove';
                 if (set.rmcl !== '') selected += ' ' + set.rmcl;
                 selected += '"';
-                if (set.rmst !== '') selected += ' style="' + set.rmst + '"';
-                selected += ' data-id="' + id + '">' + set.rmla + '</a>' + set.addc + label + '<input type="hidden" name="' + set.name + arrayMode + '" value="' + id + '" /></li>';
+                if (set.rmst !== '') selected += st + set.rmst + '"';
+                selected += ' data-id="' + id + '">' + set.rmla + '</a>';
+                if (set.addc !== '') {
+                    var addcr = set.addc.replace(/{ID}/g, id);
+                    addcr = addcr.replace(/{VALUE}/g, label);
+                    selected += addcr;
+                }
+                selected += label + '<input type="hidden" name="' + set.name + arrayMode + '" value="' + id + '" /></li>';
 
                 results.append(selected);
             }

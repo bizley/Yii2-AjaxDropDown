@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 0.1-alpha
+ * @version 1.0
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
@@ -17,7 +17,7 @@ class AjaxDropdownAsset extends AssetBundle
 {
 
     public $sourcePath = '@vendor/bizley/ajaxdropdown';
-    public $js         = ['AjaxDropdown.js'];
+    public $js         = ['AjaxDropdown.min.js'];
     public $depends    = [
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',

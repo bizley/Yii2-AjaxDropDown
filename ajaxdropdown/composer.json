@@ -5,7 +5,7 @@
     "keywords": ["yii2", "widget", "ajaxdropdown", "bootstrap", "ajax", "dropdown"],
     "license": "BSD-3-Clause",
     "support": {
-        "source": "https://github.com/bizley-code/Yii2-AjaxDropDown"
+        "source": "https://github.com/bizley-code/Yii2-AjaxDropDown/ajaxdropdown"
     },
     "authors": [
         {
