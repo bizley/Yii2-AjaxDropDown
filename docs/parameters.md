@@ -84,6 +84,7 @@ Default English strings are:
 - 'noRecords'         => 'No matching records found',
 - 'previous'          => 'previous',
 - 'recordsContaining' => 'Records containing',
+
 {NUM} tag is automatically replaced with value of **minQuery** in the 'minimumCharacters' element.
 
 ## mainClass
@@ -145,6 +146,7 @@ _string_ Additional CSS style of the 'previous' link on the results list in addi
 
 ## progressBar
 _string_ HTML string of the loading results indicator, default ```'<div class="progress" style="width:90%;margin:0 auto"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:100%">{LOADING}</div></div>'```.
+
 {LOADING} tag used here is replaced with translated 'Loading' string.
 
 ## recordClass
