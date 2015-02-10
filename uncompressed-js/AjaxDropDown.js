@@ -88,18 +88,20 @@
                 var search = false;
                 var hst = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
                 var header = hst;
-                header += set.paen + set.loca.allr + '</li><li class="divider"></li>' + prba;
+                header += set.paen;
                 var query = $(this).find('input[type=text]').val();
-                if (set.minq > 0) {
+                if (query.length > 0) {
                     if (query.length >= set.minq) {
-                        header = hst;
-                        header += set.paen + set.loca.rcon + ' <strong>' + query;
+                        header += set.loca.rcon + ' <strong>' + query;
                         header += '</strong></li><li class="divider"></li>' + prba;
                         search = true;
                     }
                     else header = headerStart + headerMinimumCharacters + li;
                 }
-                else search = true;
+                else {
+                    header+= set.loca.allr + '</li><li class="divider"></li>' + prba;
+                    search = true;
+                }
                 ul.html(header);
                 if (search) {
                     $.post(set.url, {query:query, page:page}).
