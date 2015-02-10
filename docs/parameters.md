@@ -30,6 +30,7 @@ Every value array should be given with the three array keys:
 - 'id'    => identification string for the value i.e. database ID number,
 - 'mark'  => 0|1 flag for the emphasis of the value
 - 'value' => string displayed as the value itself.
+
 If empty 'id' is set to uniqid().
 If not 0 and not 1 'mark' is set to 0.
 If empty 'value' is set to 'error: missing value key in data array'.
