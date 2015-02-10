@@ -1,3 +1,6 @@
+# WORK IN PROGRESS
+This project is still in development.
+
 # Yii2-AjaxDropDown
 Yii 2.0 dropdown widget with AJAX data
 
@@ -9,18 +12,17 @@ The widget collects AJAX data and displays it as the list where every element ca
 
 ## Screenshots
 
-All the examples here are using Bootstrap 3.3<br><br>
 _Default view:_<br>
-<img src="docs/images/basic.jpg" alt="Default view">
+![Default view](docs/images/basic.jpg "Default view")
 
 _Dropdown list visible: (option 'dropup' is available as well)_<br>
-<img src="docs/images/dropdown.jpg" alt="Dropdown list visible">
+![Dropdown list visible](docs/images/dropdown.jpg "Dropdown list visible")
 
 _Extra button:_<br>
-<img src="docs/images/extra.jpg" alt="Extra button">
+![Extra button](docs/images/extra.jpg "Extra button")
 
 _Records selected:_<br>
-<img src="docs/images/selected.jpg" alt="Records selected">
+![Records selected](docs/images/selected.jpg "Records selected")
 
 ## How to install
 
@@ -131,3 +133,17 @@ In case you want to display some records as already selected or simply just want
 This time the array shouldn't be encoded. Keep this structure even in case of a single result.
 
 You can find the controller's action example in docs files.
+
+## Available extra options
+
+**Drop up**<br>
+Set _'dropup' => true_ to trigger dropdown menu above to button.
+
+**Additional button**<br>
+Set _'extraButtonLabel'_ and/or _'extraButtonOptions'_ to add extra button between input text field and dropdown trigger button.
+
+**Additional code**<br>
+Set _'additionalCode'_ if you want to add an extra code between link removing the selected result and selected result label. You can use {ID} and {VALUE} tags to get these automatically replaced with selected data. You can replace this general option for only one row by setting _'additional'_ array element in _'data'_ parameter.
+
+**Single mode**<br>
+Set _'singleMode'_ to true if you want only one result to be selectable at once.
