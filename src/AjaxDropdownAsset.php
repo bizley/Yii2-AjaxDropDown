@@ -17,7 +17,7 @@ class AjaxDropdownAsset extends AssetBundle
 {
 
     public $sourcePath = '@vendor/bizley/ajaxdropdown';
-    public $js         = ['AjaxDropdown.min.js'];
+    public $js         = ['src/AjaxDropdown.min.js'];
     public $depends    = [
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',
