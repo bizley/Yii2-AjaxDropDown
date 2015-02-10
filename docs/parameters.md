@@ -13,7 +13,7 @@ The square brackets ('[]') are added automatically to collect tabular data input
 _string_ CSS class of the button triggering the dropdown in addition to 'ajaxDropDownToggle btn dropdown-toggle btn-default'. 
 
 ## buttonLabel
-_string_ HTML label of the button triggering the dropdown, default '<span class="caret"></span>'.
+_string_ HTML label of the button triggering the dropdown, default ```'<span class="caret"></span>'```.
 
 ## buttonStyle
 _string_ Additional CSS style of the button triggering the dropdown.
@@ -93,10 +93,10 @@ _string_ CSS class of the main div container of the widget in addition to 'ajaxD
 _string_ Additional CSS style of the main div container of the widget.
 
 ## markBegin
-_string_ HTML string of the beginning of the emphasised value on the results and preselected list, default '<em>'.
+_string_ HTML string of the beginning of the emphasised value on the results and preselected list, default ```'<em>'```.
 
 ## markEnd
-_string_ HTML string of the ending of the emphasised value on the results and preselected list, default '</em>'.
+_string_ HTML string of the ending of the emphasised value on the results and preselected list, default ```'</em>'```.
 
 ## minQuery
 _integer_ Number of characters in the input text field required to send AJAX query, default 0.
@@ -108,13 +108,13 @@ _yii\base\Model_ Data model associated with this widget.
 _string_ Widget name. This must be set if **model** is not set.
 
 ## nextBegin
-_string_ HTML string of the beginning of the 'next' link on the results list, default '<small>'.
+_string_ HTML string of the beginning of the 'next' link on the results list, default ```'<small>'```.
 
 ## nextClass
 _string_ CSS class of the 'next' link on the results list in addition to 'ajaxDropDownNext pull-right btn'.
 
 ## nextEnd
-_string_ HTML string of the ending of the 'next' link on the results list, default ' <span class="glyphicon glyphicon-chevron-right"></span></small>'.
+_string_ HTML string of the ending of the 'next' link on the results list, default ```' <span class="glyphicon glyphicon-chevron-right"></span></small>'```.
 
 ## nextStyle
 _string_ Additional CSS style of the 'next' link on the results list in addition to 'clear:none;'.
@@ -126,25 +126,25 @@ _string_ CSS class of the result element displayed when AJAX returns no matching
 _string_ Additional CSS style of the result element displayed when AJAX returns no matching records.
 
 ## pagerBegin
-_string_ HTML string of the beginning of the actual page / total pages indicator, default '<span class="badge pull-right">'.
+_string_ HTML string of the beginning of the actual page / total pages indicator, default ```'<span class="badge pull-right">'```.
 
 ## pagerEnd
 _string_ HTML string of the ending of the actual page / total pages indicator, default '</span>'.
 
 ## previousBegin
-_string_ HTML string of the beginning of the 'previous' link on the results list, default '<small><span class="glyphicon glyphicon-chevron-left"></span> '.
+_string_ HTML string of the beginning of the 'previous' link on the results list, default ```'<small><span class="glyphicon glyphicon-chevron-left"></span> '```.
 
 ## previousClass
 _string_ CSS class of the 'previous' link on the results list in addition to 'ajaxDropDownPrev pull-left btn'.
 
 ## previousEnd
-_string_ HTML string of the ending of the 'previous' link on the results list, default '</small>'.
+_string_ HTML string of the ending of the 'previous' link on the results list, default ```'</small>'```.
 
 ## previousStyle
 _string_ Additional CSS style of the 'previous' link on the results list in addition to 'clear:none;'.
 
 ## progressBar
-_string_ HTML string of the loading results indicator, default '<div class="progress" style="width:90%;margin:0 auto"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:100%">{LOADING}</div></div>'.
+_string_ HTML string of the loading results indicator, default ```'<div class="progress" style="width:90%;margin:0 auto"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:100%">{LOADING}</div></div>'```.
 {LOADING} tag used here is replaced with translated 'Loading' string.
 
 ## recordClass
@@ -157,7 +157,7 @@ _string_ Additional CSS class of the result value element on the results list.
 _string_ CSS class of the link removing value from preselected list in addition to 'ajaxDropDownRemove text-danger pull-right'.
 
 ## removeLabel
-_string_ HTML label of the link removing value from preselected list, default '<span class="glyphicon glyphicon-remove"></span>'.
+_string_ HTML label of the link removing value from preselected list, default ```'<span class="glyphicon glyphicon-remove"></span>'```.
 
 ## removeStyle
 _string_ Additional CSS style of the link removing value from preselected list.
