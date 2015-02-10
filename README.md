@@ -1,6 +1,3 @@
-# WORK IN PROGRESS
-This project is still in development.
-
 # Yii2-AjaxDropDown
 Yii 2.0 dropdown widget with AJAX data
 
