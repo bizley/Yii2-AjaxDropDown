@@ -19,7 +19,7 @@ _string_ HTML label of the button triggering the dropdown, default ```'<span cla
 _string_ Additional CSS style of the button triggering the dropdown.
 
 ## buttonsClass
-_string_ CSS class of the div container for the buttons and dropdown menu in addition to 'input-group-btn'.
+_string_ CSS class of the div container for the buttons and dropdown menu in addition to 'ajaxDropDownButtons input-group-btn'.
 
 ## buttonsStyle
 _string_ Additional CSS style of the div container for the buttons and dropdown menu.
@@ -35,6 +35,9 @@ If empty 'id' is set to uniqid().
 If not 0 and not 1 'mark' is set to 0.
 If empty 'value' is set to 'error: missing value key in data array'.
 There is the optional parameter 'additional' with HTML code to be inserted in the selected row. If given this replaces **additionalCode** for that row only. In case you want to remove the **additionalCode** only for that row set the 'additional' key to false.
+
+## delay
+_integer_ Delay between last key pressed and dropdown list opened in milliseconds, default 300. This option works only for **keyTrigger** = true.
 
 ## dropup
 _boolean_ Wheter to add Bootstrap class 'dropup' to trigger dropdown menu above the button, default false.
@@ -68,6 +71,9 @@ _string_ CSS class of the input text field in addition to 'form-control'.
 
 ## inputStyle
 _string_ Additional CSS style of the input text field.
+
+## keyTrigger
+_boolean_ Wheter pressing the key in filter field should trigger the dropdown list to open, default true.
 
 ## loadingClass
 _string_ CSS class of the loading element on the results list in addition to 'ajaxDropDownLoading'.
@@ -127,6 +133,19 @@ _string_ CSS class of the result element displayed when AJAX returns no matching
 ## noRecordsStyle
 _string_ Additional CSS style of the result element displayed when AJAX returns no matching records.
 
+## onRemove
+_string_ JavaScript expression to be called when a result is removed from the list.<br>
+Available js variables:
+- _id_ - ID of the removed result,
+- _selection_ - list of all selected results (after removing).
+
+## onSelect
+_string_ JavaScript expression to be called when a result is selected from the list.<br>
+Available js variables:
+- _id_  - ID of the selected result,
+- _label_ - label of the selected result,
+- _selection_ - list of all selected results (after adding).
+
 ## pagerBegin
 _string_ HTML string of the beginning of the actual page / total pages indicator, default ```'<span class="badge pull-right">'```.
 
@@ -162,6 +181,15 @@ _string_ CSS class of the link removing value from preselected list in addition 
 ## removeLabel
 _string_ HTML label of the link removing value from preselected list, default ```'<span class="glyphicon glyphicon-remove"></span>'```.
 
+## removeSingleClass
+_string_ CSS class of the button removing the selection on singleMode in addition to 'ajaxDropDownSingleRemove btn dropdown-toggle btn-default'.
+
+## removeSingleLabel
+_string_ HTML label of the button removing the selection on singleMode, default ```'<span class="glyphicon glyphicon-remove text-danger"></span>'```.
+
+## removeSingleStyle
+_string_ Additional CSS style of the button removing the selection in singleMode, default 'display:none;'
+
 ## removeStyle
 _string_ Additional CSS style of the link removing value from preselected list.
 
@@ -185,6 +213,9 @@ _string_ Assitional CSS style of the div container for the preselected data.
 
 ## singleMode
 _boolean_ Wheter to set widget in mode that allows only one selected value or more, default false.
+
+## singleModeBottom
+_boolean_ Wheter to display singleMode result underneath the widget, default false.
 
 ## source
 _string_ URL of the AJAX source of records.

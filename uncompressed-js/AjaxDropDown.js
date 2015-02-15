@@ -1,5 +1,5 @@
 /*!
- * AjaxDropDown v1.0
+ * AjaxDropDown v1.2
  * Pawel Bizley Brzozowski
  * https://github.com/bizley-code/Yii2-AjaxDropDown
  * http://www.yiiframework.com/extension/yii2-ajaxdropdown
@@ -7,42 +7,13 @@
 (function ($) {
     $.fn.ajaxDropDown = function (options) {
         var set = $.extend(true, {
-            addc: '',
-            ercl: '',
-            erst: '',
-            hecl: '',
-            hest: '',
-            locl: '',
-            lost: '',
-            mabe: '',
-            maen: '',
-            minq: 0,
-            name: 'ajaxDropDown',
-            nebe: '',
-            necl: '',
-            neen: '',
-            nest: '',
-            nrcl: '',
-            nrst: '',
-            pabe: '',
-            paen: '',
-            prbe: '',
-            prcl: '',
-            pren: '',
-            prst: '',
-            prba: '',
-            recl: '',
-            rest: '',
-            rmcl: '',
-            rmla: '',
-            rmst: '',
-            rscl: '',
-            rsst: '',
-            smod: false,
-            swcl: '',
-            swst: '',
-            url: '',
-            loca: {
+            addc: '', dely: 300, ercl: '', erst: '', hecl: '', hest: '', 
+            keyt: true, locl: '', lost: '', mabe: '', maen: '', minq: 0, 
+            name: 'ajaxDropDown', nebe: '', necl: '', neen: '', nest: '', 
+            nrcl: '', nrst: '', onrm: '', onsl: '', pabe: '', paen: '', 
+            prbe: '', prcl: '', pren: '', prst: '', prba: '', recl: '', 
+            rest: '', rmcl: '', rmla: '', rmst: '', rscl: '', rsst: '', 
+            smbt: false, smod: false, swcl: '', swst: '', url: '', loca: {
                 allr: 'All records',
                 rcon: 'Records containing',
                 mcha: 'Type at least {NUM} character(s) to filter the results...',
@@ -52,14 +23,43 @@
                 nrec: 'No matching records found'
             }
         }, options);
+        var accl = 'active';
+        var ajRec = ' ajaxDropDownRecord';
+        var ali = '</a></li>';
+        var aNext = 'a.ajaxDropDownNext';
+        var aPrev = 'a.ajaxDropDownPrev';
+        var buttSR = 'button.ajaxDropDownSingleRemove';
+        var buttTogg = 'button.ajaxDropDownToggle';
+        var dataId = '><a href="#" class="ajaxDropDownResult" data-id="';
+        var dicl = 'disabled';
+        var hicl = 'hidden';
+        var inpTxt = 'input[type=text]';
         var li = '</li>';
         var lih = '<li class="dropdown-header';
+        var liPage = 'li.ajaxDropDownPage';
+        var liPages = 'li.ajaxDropDownPages';
+        var liPagesAll = '<li class="ajaxDropDownPages ajaxDropDownPage';
+        var liSel = 'li.ajaxDropDownSelected';
+        var spNum = 'span.ajaxDropDownPageNumber';
         var st = ' style="';
-        var ali = '</a></li>';
-        var dis = 'disabled';
-        var di = ' ' + dis;
-        var hid = 'hidden';
-        var ul = this.find('ul.ajaxDropDownMenu');
+        var ulMenu = 'ul.ajaxDropDownMenu';
+        var timeOut = null;
+        var selection = [];
+        var onRemove = new Function('id', 'selection', set.onrm);
+        var onSelect = new Function('id', 'label', 'selection', set.onsl);
+        var rearrange = function(id) {
+            var rearrSelection = [];
+            for (var i in selection) {
+                if (selection[i].id != id) {
+                    rearrSelection.push(selection[i]);
+                }
+            }
+            selection = rearrSelection;
+        };
+        var ul = this.find(ulMenu);
+        var tx = this.find(inpTxt);
+        var bt = this.find(buttTogg);
+        var btns = this.find('div.ajaxDropDownButtons');
         var prba = '<li class="ajaxDropDownLoading';
         if (set.locl !== '') prba += ' ' + set.locl;
         prba += '"';
@@ -81,27 +81,25 @@
         nrec += '"';
         if (set.nrst !== '') nrec += st + set.nrst + '"';
         nrec += '>' + set.loca.nrec + li;
-        this.on('show.bs.dropdown', function(){
-            if (ul.find('li.ajaxDropDownPages').length === 0) {
-                var page = $(this).find('button.ajaxDropDownToggle').data('page');
+        var loadData = function(){
+            if (ul.find(liPages).length === 0) {
+                var page = bt.data('page');
                 page = page * 1;
                 var search = false;
                 var hst = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
                 var header = hst;
-                header += set.paen;
-                var query = $(this).find('input[type=text]').val();
+                header += set.paen + set.loca.allr + '</li><li class="divider"></li>' + prba;
+                var query = tx.val();
                 if (query.length > 0) {
                     if (query.length >= set.minq) {
-                        header += set.loca.rcon + ' <strong>' + query;
+                        header = hst;
+                        header += set.paen + set.loca.rcon + ' <strong>' + query;
                         header += '</strong></li><li class="divider"></li>' + prba;
                         search = true;
                     }
                     else header = headerStart + headerMinimumCharacters + li;
                 }
-                else {
-                    header+= set.loca.allr + '</li><li class="divider"></li>' + prba;
-                    search = true;
-                }
+                else search = true;
                 ul.html(header);
                 if (search) {
                     $.post(set.url, {query:query, page:page}).
@@ -113,12 +111,12 @@
                             if (results.data.length) {
                                 ul.find('span.ajaxDropDownTotalPages').text(results.total);
                                 for (i in results.data) {
-                                    var result = '<li class="ajaxDropDownPages ajaxDropDownPage' + results.page + ' ajaxDropDownRecord'+ results.data[i].id;
+                                    var result = liPagesAll + results.page + ajRec + results.data[i].id;
                                     if (set.recl !== '') result += ' ' + set.recl;
-                                    if (ul.parent().parent().parent().find('li.ajaxDropDownSelected' + results.data[i].id).length) result += ' active';
+                                    if (ul.parent().parent().parent().find(liSel + results.data[i].id).length) result += ' ' + accl;
                                     result += '"';
                                     if (set.rest !== '') result += st + set.rest + '"';
-                                    result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
+                                    result += dataId + results.data[i].id +'">';
                                     if (results.data[i].mark) result += set.mabe;
                                     result += results.data[i].value;
                                     if (results.data[i].mark) result += set.maen;
@@ -133,14 +131,14 @@
                                     pages += '><a href="#" class="ajaxDropDownPrev';
                                     if (set.prcl !== '') pages += ' ' + set.prcl;
                                     if (results.page === 1) {
-                                        pages += di;
+                                        pages += ' ' + dicl;
                                     }
                                     pages += '"';
                                     if (set.prst !== '') pages += st + set.prst + '"';
                                     pages += '>' + set.prbe + set.loca.prev + set.pren + '</a><a href="#" class="ajaxDropDownNext';
                                     if (set.necl !== '') pages += ' ' + set.necl;
                                     if (results.page === results.total) {
-                                       pages += di;
+                                       pages += ' ' + dicl;
                                     }
                                     pages += '"';
                                     if (set.nest !== '') pages += st + set.nest + '"';
@@ -153,68 +151,76 @@
                         always(function(){$('li.ajaxDropDownLoading').remove();});
                 }
             }
-        });
-        this.on('click', 'a.ajaxDropDownNext', function(e){
+        };
+        this.on(set.trig, loadData);
+        this.on('click', aNext, function(e){
             e.preventDefault();
             e.stopPropagation();
-            ul.find('a.ajaxDropDownPrev').removeClass(dis);
-            ul.find('a.ajaxDropDownNext').addClass(dis);
-            var page = ul.parent().find('button.ajaxDropDownToggle').data('page');
+            ul.find(aPrev).removeClass(dicl);
+            ul.find(aNext).addClass(dicl);
+            var page = bt.data('page');
             page = page * 1 + 1;
-            if (ul.find('li.ajaxDropDownPage' + page).length) {
-                ul.find('li.ajaxDropDownPages').addClass(hid);
-                ul.find('li.ajaxDropDownPage' + page).removeClass(hid);
-                ul.find('a.ajaxDropDownNext').removeClass(dis);
+            if (ul.find(liPage + page).length) {
+                ul.find(liPages).addClass(hicl);
+                ul.find(liPage + page).removeClass(hicl);
+                ul.find(aNext).removeClass(dicl);
             }
             else {
-                var query = ul.parent().parent().find('input[type=text]').val();
+                var query = tx.val();
                 $.post(set.url, {query:query, page:page}).
                     fail(function(){ul.append(erro);}).
                     done(function(data){
                         var results = $.parseJSON(data);
                         if (results.data.length) {
-                            ul.find('.ajaxDropDownPages').addClass(hid);
+                            ul.find(liPages).addClass(hicl);
                             if (results.total === undefined) results.total = 1;
                             if (results.page === undefined) results.page = 1;
-                            for (i in results.data) {
-                                var result = '<li class="ajaxDropDownPages ajaxDropDownPage' + results.page + ' ajaxDropDownRecord'+ results.data[i].id;
+                            for (var i in results.data) {
+                                var result = liPagesAll + results.page + ajRec + results.data[i].id;
                                 if (set.recl !== '') result += ' ' + set.recl;
-                                if (ul.parent().parent().parent().find('li.ajaxDropDownSelected' + results.data[i].id).length) result += ' active';
+                                if (ul.parent().parent().parent().find(liSel + results.data[i].id).length) result += ' ' + accl;
                                 result += '"';
                                 if (set.rest !== '') result += st + set.rest + '"';
-                                result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
+                                result += dataId + results.data[i].id +'">';
                                 if (results.data[i].mark) result += set.mabe;
                                 result += results.data[i].value;
                                 if (results.data[i].mark) result += set.maen;
                                 result += ali;
                                 ul.find('.divider.ajaxDropDownInfo').before(result);
                             }
-                            if (results.page < results.total) ul.find('a.ajaxDropDownNext').removeClass(dis);
+                            if (results.page < results.total) ul.find(aNext).removeClass(dicl);
                             else page = results.total;
                         }
                         else ul.append(nrec);
                     });
             }
-            ul.parent().find('button.ajaxDropDownToggle').data('page', page);
-            ul.find('span.ajaxDropDownPageNumber').text(page);
+            bt.data('page', page);
+            ul.find(spNum).text(page);
         });
-        this.on('click', 'a.ajaxDropDownPrev', function(e){
+        this.on('click', aPrev, function(e){
             e.preventDefault();
             e.stopPropagation();
-            ul.find('a.ajaxDropDownNext').removeClass(dis);
-            ul.find('a.ajaxDropDownPrev').addClass(dis);
-            var page = ul.parent().find('button.ajaxDropDownToggle').data('page');
+            ul.find(aNext).removeClass(dicl);
+            ul.find(aPrev).addClass(dicl);
+            var page = bt.data('page');
             page = page * 1 - 1;
             if (page < 1) page = 1;
-            ul.find('li.ajaxDropDownPages').addClass(hid);
-            ul.find('li.ajaxDropDownPage' + page).removeClass(hid);
-            if (page > 1) ul.find('a.ajaxDropDownPrev').removeClass(dis);
-            ul.parent().find('button.ajaxDropDownToggle').data('page', page);
-            ul.find('span.ajaxDropDownPageNumber').text(page);
+            ul.find(liPages).addClass(hicl);
+            ul.find(liPage + page).removeClass(hicl);
+            if (page > 1) ul.find(aPrev).removeClass(dicl);
+            bt.data('page', page);
+            ul.find(spNum).text(page);
         });
-        this.on('keyup', 'input[type=text]', function(){
-            $(this).parent().find('button.ajaxDropDownToggle').data('page', 1);
-            $(this).parent().find('ul.ajaxDropDownMenu').find('li.ajaxDropDownPages').remove();
+        this.on('keyup', inpTxt, function(){
+            window.clearTimeout(timeOut);
+            $(this).parent().find(buttTogg).data('page', 1);
+            $(this).parent().find(ulMenu).find(liPages).remove();
+            if (set.keyt) {
+                timeOut = window.setTimeout(function(){
+                    btns.addClass('open');
+                    loadData();
+                }, set.dely);                
+            }
         });
         this.on('click', 'a.ajaxDropDownResult', function(e){
             e.preventDefault();
@@ -224,39 +230,68 @@
             var arrayMode = '[]';
             if (set.smod) {
                 results.html('');
-                $(this).parent().parent().find('li.ajaxDropDownPages').removeClass('active');
+                $(this).parent().parent().find(liPages).removeClass(accl);
                 arrayMode = '';
             }
-            if ($(this).parent().hasClass('active')) {
-                $(this).parent().removeClass('active');
-                results.find('li.ajaxDropDownSelected' + id).remove();
+            if (set.smod && set.addc === '' && !set.smbt) {
+                var rem = $(this).parent().parent().parent().find(buttSR);
+                bt.hide();
+                rem.show();
+                tx.val(label.replace(/<.*?>/g, '').replace(/"/g, "'"));
+                tx.prop('disabled', true);
+                tx.after('<input class="singleResult" type="hidden" name="' + set.name + '" value="' + id + '">');
+                selection.push({id:id, label:label});
+                onSelect(id, label, selection);
             }
             else {
-                $(this).parent().addClass('active');
-                if (set.smod) arrayMode = '';
-                var selected = '<li class="ajaxDropDownSelected' + id;
-                if (set.rscl !== '') selected += ' ' + set.rscl;
-                selected += '"';
-                if (set.rsst !== '') selected += st + set.rsst + '"';
-                selected += '><a href="#" class="ajaxDropDownRemove';
-                if (set.rmcl !== '') selected += ' ' + set.rmcl;
-                selected += '"';
-                if (set.rmst !== '') selected += st + set.rmst + '"';
-                selected += ' data-id="' + id + '">' + set.rmla + '</a>';
-                if (set.addc !== '') {
-                    var addcr = set.addc.replace(/{ID}/g, id);
-                    addcr = addcr.replace(/{VALUE}/g, label);
-                    selected += addcr;
+                if ($(this).parent().hasClass(accl)) {
+                    $(this).parent().removeClass(accl);
+                    results.find(liSel + id).remove();
+                    rearrange(id);
+                    onRemove(id, selection);
                 }
-                selected += label + '<input type="hidden" name="' + set.name + arrayMode + '" value="' + id + '" /></li>';
-
-                results.append(selected);
+                else {
+                    $(this).parent().addClass(accl);
+                    var selected = '<li class="ajaxDropDownSelected' + id;
+                    if (set.rscl !== '') selected += ' ' + set.rscl;
+                    selected += '"';
+                    if (set.rsst !== '') selected += st + set.rsst + '"';
+                    selected += '><a href="#" class="ajaxDropDownRemove';
+                    if (set.rmcl !== '') selected += ' ' + set.rmcl;
+                    selected += '"';
+                    if (set.rmst !== '') selected += st + set.rmst + '"';
+                    selected += ' data-id="' + id + '">' + set.rmla + '</a>';
+                    if (set.addc !== '') {
+                        var addcr = set.addc.replace(/{ID}/g, id);
+                        addcr = addcr.replace(/{VALUE}/g, label);
+                        selected += addcr;
+                    }
+                    selected += label + '<input type="hidden" name="' + set.name + arrayMode + '" value="' + id + '"></li>';
+                    results.append(selected);
+                    selection.push({id:id, label:label});
+                    onSelect(id, label, selection);
+                }
             }
         });
         this.on('click', 'a.ajaxDropDownRemove', function(e){
             e.preventDefault();
-            $(this).parent().parent().parent().find('li.ajaxDropDownRecord' + $(this).data('id')).removeClass('active');
+            var id = $(this).data('id');
+            $(this).parent().parent().parent().find('li.ajaxDropDownRecord' + id).removeClass(accl);
             $(this).parent().remove();
+            rearrange(id);
+            onRemove(id, selection);
+        });
+        this.on('click', buttSR, function(e){
+            e.preventDefault();
+            var singleRes = $(this).parent().parent().find('input.singleResult');
+            var id = singleRes.val();
+            singleRes.remove();
+            tx.prop('disabled', false);
+            tx.val('');
+            $(this).hide();
+            bt.show();
+            rearrange(id);
+            onRemove(id, selection);
         });
         return this;
     };
