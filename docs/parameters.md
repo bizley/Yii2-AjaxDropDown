@@ -69,6 +69,9 @@ _string_ Additional CSS style of the results header element.
 ## inputClass
 _string_ CSS class of the input text field in addition to 'form-control'.
 
+## inputOptions
+_array_ HTML options for the input text field.
+
 ## inputStyle
 _string_ Additional CSS style of the input text field.
 

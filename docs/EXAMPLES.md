@@ -3,7 +3,6 @@
 ## Data source example
 
     use common\models\User;
-    use yii\helpers\HtmlPurifier;
     use yii\data\ActiveDataProvider;
     use yii\helpers\Json;
 
@@ -23,7 +22,6 @@
             $queryObject = User::find();
         }
         else {
-            $query = HtmlPurifier::process($query);
             $queryObject = User::find()->where(['like', 'email', $query]);
         }        
         $provider = new ActiveDataProvider([

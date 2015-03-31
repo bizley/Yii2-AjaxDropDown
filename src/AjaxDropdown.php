@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.2
+ * @version 1.2.1
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
@@ -159,6 +159,12 @@ class AjaxDropdown extends Widget
      * 'form-control'.
      */
     public $inputClass;
+    
+    /**
+     * @var array HTML options for the input text field.
+     * @since 1.2.1
+     */
+    public $inputOptions;
 
     /**
      * @var string Additional CSS style of the input text field.
@@ -626,6 +632,9 @@ class AjaxDropdown extends Widget
     protected function htmlOptionsInput($disabled = false)
     {
         $options = ['id' => false];
+        if (!empty($this->inputOptions) && is_array($this->inputOptions)) {
+            $options = $this->inputOptions;
+        }
         if ($disabled) {
             $options['disabled'] = true;
         }

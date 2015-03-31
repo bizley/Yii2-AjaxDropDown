@@ -46,7 +46,7 @@ This is just a basic widget configuration. You can find all the options describe
 
     <div id="[WIDGET_ID]" class="ajaxDropDownWidget {mainClass}" {style="{mainStyle}"}>
         <div class="ajaxDropDown {groupClass}" {style="{groupStyle}"}>
-            <input type="text" name="ajaxDropDownInput" value="" class="{inputClass}" {style="{inputStyle}"}>
+            <input {type="text" name="ajaxDropDownInput" value="" class="{inputClass}" {style="{inputStyle}"} inputOptions}>
             <input type="hidden" value="[SELECTED_ID]" name="[ATTRIBUTE_NAME]" class="singleResult">
             <div class="{buttonsClass}" {style="{buttonsStyle}"}>
                 {<button type="button" {extraButtonHtmlOptions}>{extraButtonLabel}</button>}

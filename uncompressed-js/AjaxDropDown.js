@@ -1,5 +1,5 @@
 /*!
- * AjaxDropDown v1.2
+ * AjaxDropDown v1.2.1
  * Pawel Bizley Brzozowski
  * https://github.com/bizley-code/Yii2-AjaxDropDown
  * http://www.yiiframework.com/extension/yii2-ajaxdropdown
@@ -152,7 +152,7 @@
                 }
             }
         };
-        this.on(set.trig, loadData);
+        this.on('show.bs.dropdown', loadData);
         this.on('click', aNext, function(e){
             e.preventDefault();
             e.stopPropagation();

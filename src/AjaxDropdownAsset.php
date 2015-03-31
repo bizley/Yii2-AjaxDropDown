@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.2
+ * @version 1.2.1
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
