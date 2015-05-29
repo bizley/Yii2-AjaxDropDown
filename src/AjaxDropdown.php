@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.2.1.1
+ * @version 1.2.1.2
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
@@ -931,9 +931,9 @@ class AjaxDropdown extends Widget
     public function registerScript($id, $name)
     {
         $view    = $this->getView();
-        AjaxDropdownAsset::register($view);
+        assets\AjaxDropdownAsset::register($view);
         $options = Json::encode($this->prepareOptions($name));
-        $view->registerJs(implode(PHP_EOL, [';', "jQuery('#$id').ajaxDropDown($options);"]));
+        $view->registerJs("jQuery('#$id').ajaxDropDown($options);");
     }
     
     /**
