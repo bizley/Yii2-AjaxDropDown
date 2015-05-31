@@ -2,30 +2,32 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.2.1.2
+ * @version 1.3
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
 namespace bizley\ajaxdropdown;
 
+use bizley\ajaxdropdown\assets\AjaxDropdownAsset;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use Yii;
 
 /**
- * AjaxDropDown is the Yii2 widget for rendering the dropdown menu with the AJAX
+ * AjaxDropDown is the Yii 2 widget for rendering the dropdown menu with the AJAX
  * data source.
- * @see https://github.com/bizley-code/Yii2-AjaxDropDown
- * @see http://www.yiiframework.com/extension/yii2-ajaxdropdown
+ * https://github.com/bizley-code/Yii2-AjaxDropDown
+ * http://www.yiiframework.com/extension/yii2-ajaxdropdown
  *
  * See README file for configuration and usage examples.
  *
  * AjaxDropDown requires Yii version 2.0.
- * @see http://www.yiiframework.com
- * @see https://github.com/yiisoft/yii2
+ * http://www.yiiframework.com
+ * https://github.com/yiisoft/yii2
  *
- * For Yii 1.1 version of this widget
- * @see https://github.com/bizley-code/Yii-AjaxDropDown
+ * For Yii 1.1 version of this widget see
+ * https://github.com/bizley-code/Yii-AjaxDropDown
  */
 class AjaxDropdown extends Widget
 {
@@ -172,6 +174,13 @@ class AjaxDropdown extends Widget
     public $inputStyle;
 
     /**
+     * @var boolean Wheter adding or removing results with JS should trigger 
+     * onRemove and onSelect callbacks, default true.
+     * @since 1.3
+     */
+    public $jsEventsCallback = true;
+    
+    /**
      * @var boolean Wheter pressing the key in filter field should trigger the 
      * dropdown list to open, default true.
      * @since 1.2
@@ -275,7 +284,7 @@ class AjaxDropdown extends Widget
      * @var string JavaScript expression to be called when a result is removed 
      * from the list.
      * Available js variables:
-     * id - ID of the removed result,
+     * id        - ID of the removed result,
      * selection - list of all selected results (after removing).
      * @since 1.2
      */
@@ -285,8 +294,8 @@ class AjaxDropdown extends Widget
      * @var string JavaScript expression to be called when a result is selected 
      * from the list.
      * Available js variables:
-     * id - ID of the selected result,
-     * label - label of the selected result,
+     * id        - ID of the selected result,
+     * label     - label of the selected result,
      * selection - list of all selected results (after adding).
      * @since 1.2
      */
@@ -526,9 +535,6 @@ class AjaxDropdown extends Widget
         'selectedClass'     => 'ajaxDropDownResults',
     ];
 
-    const ADD_NEW_LINE = "\n";
-    const ADD_TAB      = "\t";
-
     /**
      * Sets dropdown triggering button label.
      * @return string
@@ -584,8 +590,9 @@ class AjaxDropdown extends Widget
     {
         $options = !empty($this->extraButtonOptions) && is_array($this->extraButtonOptions) ? $this->extraButtonOptions : [];
         return array_merge(
-                ['type' => 'button'], $options
-        );
+                ['type' => 'button'],
+                $options
+            );
     }
 
     /**
@@ -616,12 +623,10 @@ class AjaxDropdown extends Widget
             $style .= ' ' . $this->groupStyle;
         }
 
-        $return = [
-            'class' => $class ? : null,
-            'style' => $style ? : null,
+        return [
+            'class' => $class ?: null,
+            'style' => $style ?: null,
         ];
-
-        return $return;
     }
 
     /**
@@ -669,9 +674,11 @@ class AjaxDropdown extends Widget
      */
     protected function htmlOptionsRemoveSingle($show = false)
     {
-        return $this->htmlOptionsSet('removeSingle', [
-                    'type' => 'button',
-        ], $show ? 'display:inline-block;' : '');
+        return $this->htmlOptionsSet(
+                'removeSingle',
+                ['type' => 'button'], 
+                $show ? 'display:inline-block;' : ''
+            );
     }
 
     /**
@@ -697,12 +704,10 @@ class AjaxDropdown extends Widget
             $style .= ' ' . $this->resultStyle;
         }
 
-        $return = [
-            'class' => $class ? : null,
-            'style' => $style ? : null,
+        return [
+            'class' => $class ?: null,
+            'style' => $style ?: null,
         ];
-
-        return $return;
     }
 
     /**
@@ -807,7 +812,6 @@ class AjaxDropdown extends Widget
         if (is_numeric($this->delay) && $this->delay > 0) {
             $value = (int) $this->delay;
         }
-
         return $value;
     }
     
@@ -821,7 +825,7 @@ class AjaxDropdown extends Widget
         if (!empty($this->local) && is_array($this->local)) {
             foreach ($this->local as $key => $value) {
                 if (!empty($value) && is_string($value)) {
-                    $local[$key] = \Yii::t($this->translateCategory, $value);
+                    $local[$key] = Yii::t($this->translateCategory, $value);
                 }
             }
         }
@@ -864,10 +868,10 @@ class AjaxDropdown extends Widget
     protected function prepareOptionProgressBar()
     {
         if (!empty($this->progressBar) && is_string($this->progressBar)) {
-            return strtr($this->progressBar, ['{LOADING}' => \Yii::t($this->translateCategory, 'Loading')]);
+            return strtr($this->progressBar, ['{LOADING}' => Yii::t($this->translateCategory, 'Loading')]);
         }
         else {
-            return !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], ['{LOADING}' => \Yii::t($this->translateCategory, 'Loading')]) : '';
+            return !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], ['{LOADING}' => Yii::t($this->translateCategory, 'Loading')]) : '';
         }
     }
 
@@ -885,6 +889,7 @@ class AjaxDropdown extends Widget
             'erst' => $this->prepareOption('errorStyle'),
             'hecl' => $this->prepareOption('headerClass'),
             'hest' => $this->prepareOption('headerStyle'),
+            'jsev' => $this->prepareOptionBool('jsEventsCallback'),
             'keyt' => $this->prepareOptionBool('keyTrigger'),
             'loca' => $this->prepareOptionLocal(),
             'locl' => $this->prepareOption('loadingClass'),
@@ -931,7 +936,7 @@ class AjaxDropdown extends Widget
     public function registerScript($id, $name)
     {
         $view    = $this->getView();
-        assets\AjaxDropdownAsset::register($view);
+        AjaxDropdownAsset::register($view);
         $options = Json::encode($this->prepareOptions($name));
         $view->registerJs("jQuery('#$id').ajaxDropDown($options);");
     }
@@ -949,185 +954,6 @@ class AjaxDropdown extends Widget
         else {
             return $this->bootstrapDefaults['removeSingleLabel'];
         }
-    }
-
-    /**
-     * Renders main part of the widget with filter field and buttons.
-     * @since 1.2
-     */
-    protected function renderMain()
-    {
-        $singleMode = false;
-        if ($this->singleMode && !$this->singleModeBottom && $this->additionalCode == '') {
-            if (is_array($this->data) && isset($this->data[0])) {
-                $singleMode = true;
-            }
-        }
-
-        echo $this->renderTab(2);
-        echo Html::textInput(!empty($this->defaults['inputName']) ? $this->defaults['inputName'] : '', $singleMode ? (!empty($this->data[0]['value']) ? str_replace('"', '', strip_tags($this->data[0]['value'])) : '') : '', $this->htmlOptionsInput($singleMode));
-        if ($singleMode) {
-            if (!empty($this->model)) {
-                echo Html::activeHiddenInput($this->model, $this->attribute, ['value' => !empty($this->data[0]['id']) ? $this->data[0]['id'] : '', 'id' => false, 'class' => 'singleResult']);
-            }
-            else {
-                echo Html::hiddenInput($this->name, !empty($this->data[0]['id']) ? $this->data[0]['id'] : '', ['id' => false, 'class' => 'singleResult']);
-            }
-        }
-        echo $this->renderNewLine();
-        echo $this->renderTab(2);
-        echo Html::beginTag('div', $this->htmlOptionsButtons());
-        echo $this->renderNewLine();
-        if (!empty($this->extraButtonLabel) || !empty($this->extraButtonHtmlOptions)) {
-            echo $this->renderTab(3);
-            echo Html::button(is_string($this->extraButtonLabel) ? $this->extraButtonLabel : '', $this->htmlOptionsExtraButton());
-            echo $this->renderNewLine();
-        }
-        echo $this->renderTab(3);
-        echo Html::button($this->buttonLabel(), $this->htmlOptionsButton($singleMode));
-        echo Html::button($this->removeSingleLabel(), $this->htmlOptionsRemoveSingle($singleMode));
-        echo $this->renderNewLine();
-    }
-    
-    /**
-     * Renders new line characters.
-     * @param integer $copy Number of repeats, default 1
-     * @return string
-     */
-    protected function renderNewLine($copy = 1)
-    {
-        return \str_repeat(self::ADD_NEW_LINE, $copy);
-    }
-
-    /**
-     * Renders single preselected value result.
-     * @param array $data Preselected value data array
-     * @param boolean $singleMode Wheter to render hidden output field as 
-     * single one or as part of tabular data collection
-     */
-    protected function renderResult($data = [], $singleMode = false)
-    {
-        if (empty($data['id'])) {
-            $data['id'] = uniqid();
-        }
-        if (empty($data['mark']) || !in_array($data['mark'], [0, 1])) {
-            $data['mark'] = 0;
-        }
-        if (empty($data['value']) || !is_string($data['value'])) {
-            $data['value'] = 'error: missing value key in data array';
-        }
-        if (isset($data['additional']) && $data['additional'] !== false) {
-            if (empty($data['additional']) || !is_string($data['additional'])) {
-                $data['additional'] = '';
-            }
-        }
-        else {
-            $data['additional'] = '';
-        }
-
-        if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
-            $removeLabel = $this->removeLabel;
-        }
-        else {
-            $removeLabel = $this->bootstrapDefaults['removeLabel'];
-        }
-
-        $arrayMode = '[]';
-        if ($singleMode) {
-            $arrayMode = '';
-        }
-
-        echo $this->renderTab(2);
-        echo Html::beginTag('li', $this->htmlOptionsResult($data['id']));
-        echo Html::a($removeLabel, '#', $this->htmlOptionsRemove($data['id']));
-        if ($data['additional'] !== false && !empty($data['additional'])) {
-            echo str_replace('{ID}', $data['id'], str_replace('{VALUE}', $data['value'], $data['additional']));
-        }
-        elseif (!empty($this->additionalCode)) {
-            echo str_replace('{ID}', $data['id'], str_replace('{VALUE}', $data['value'], $this->additionalCode));
-        }
-        if ($data['mark']) {
-            echo $this->prepareOption('markBegin');
-        }
-        echo $data['value'];
-        if ($data['mark']) {
-            echo $this->prepareOption('markEnd');
-        }
-        if (!empty($this->model)) {
-            echo Html::activeHiddenInput($this->model, $this->attribute . $arrayMode, ['value' => $data['id'], 'id' => false]);
-        }
-        else {
-            echo Html::hiddenInput($this->name . $arrayMode, $data['id'], ['id' => false]);
-        }
-        echo Html::endTag('li');
-        echo $this->renderNewLine();
-    }
-
-    /**
-     * Renders the preselected data values.
-     */
-    protected function renderResults()
-    {
-        if (is_array($this->data)) {
-
-            if ($this->singleMode) {
-                
-                if ($this->singleModeBottom) {
-                    if (isset($this->data[0])) {
-                        $this->renderResult($this->data[0], $this->singleMode);
-                    }
-                }
-            }
-            else {
-                foreach ($this->data as $data) {
-                    $this->renderResult($data, $this->singleMode);
-                }
-            }
-        }
-    }
-
-    /**
-     * Renders tab characters.
-     * @param integer $copy Number of repeats, default 1
-     * @return string
-     */
-    protected function renderTab($copy = 1)
-    {
-        return \str_repeat(self::ADD_TAB, $copy);
-    }
-
-    /**
-     * Renders the widget
-     * @param string $id ID of the widget
-     */
-    protected function renderWidget($id)
-    {
-        echo $this->renderNewLine();
-        echo Html::beginTag('div', $this->htmlOptionsMain($id));
-        echo $this->renderNewLine();
-        echo $this->renderTab();
-        echo Html::beginTag('div', $this->htmlOptionsGroup());
-        echo $this->renderNewLine();
-        $this->renderMain();
-        echo $this->renderTab(3);
-        echo Html::beginTag('ul', $this->htmlOptionsResults());
-        echo Html::endTag('ul');
-        echo $this->renderNewLine();
-        echo $this->renderTab(2);
-        echo Html::endTag('div');
-        echo $this->renderNewLine();
-        echo $this->renderTab();
-        echo Html::endTag('div');
-        echo $this->renderNewLine();
-        echo $this->renderTab();
-        echo Html::beginTag('ul', $this->htmlOptionsSelected());
-        echo $this->renderNewLine();
-        $this->renderResults();
-        echo $this->renderTab();
-        echo Html::endTag('ul');
-        echo $this->renderNewLine();
-        echo Html::endTag('div');
-        echo $this->renderNewLine();
     }
 
     protected function resolveNameID()
@@ -1148,6 +974,31 @@ class AjaxDropdown extends Widget
     }
     
     /**
+     * Renders the preselected data values.
+     */
+    protected function results()
+    {
+        $results = [];
+        
+        if (is_array($this->data)) {
+            if ($this->singleMode) {
+                if ($this->singleModeBottom) {
+                    if (isset($this->data[0])) {
+                        return [$this->singleResult($this->data[0], $this->singleMode)];
+                    }
+                }
+            }
+            else {
+                foreach ($this->data as $data) {
+                    $results[] = $this->singleResult($data, $this->singleMode);
+                }
+            }
+        }
+        
+        return $results;
+    }
+    
+    /**
      * Renders the widget.
      */
     public function run()
@@ -1155,8 +1006,88 @@ class AjaxDropdown extends Widget
         list($name, $id) = $this->resolveNameID();
 
         $id .= '_' . (!empty($this->defaults['mainClass']) ? $this->defaults['mainClass'] : '');
-        $this->renderWidget($id);
         $this->registerScript($id, $name);
+        
+        $singleMode = false;
+        if ($this->singleMode && !$this->singleModeBottom && $this->additionalCode == '') {
+            if (is_array($this->data) && isset($this->data[0])) {
+                $singleMode = true;
+            }
+        }
+        
+        return $this->render('field', [
+            'attribute'               => $this->attribute,
+            'buttonLabel'             => $this->buttonLabel(),
+            'data'                    => $this->data,
+            'defaults'                => $this->defaults,
+            'extraButtonLabel'        => $this->extraButtonLabel,
+            'extraButtonOptions'      => $this->extraButtonOptions,
+            'htmlOptionsButton'       => $this->htmlOptionsButton($singleMode),
+            'htmlOptionsButtons'      => $this->htmlOptionsButtons(),
+            'htmlOptionsExtraButton'  => $this->htmlOptionsExtraButton(),
+            'htmlOptionsGroup'        => $this->htmlOptionsGroup(),
+            'htmlOptionsInput'        => $this->htmlOptionsInput($singleMode),
+            'htmlOptionsMain'         => $this->htmlOptionsMain($id),
+            'htmlOptionsRemoveSingle' => $this->htmlOptionsRemoveSingle($singleMode),
+            'htmlOptionsResults'      => $this->htmlOptionsResults(),
+            'htmlOptionsSelected'     => $this->htmlOptionsSelected(),
+            'model'                   => $this->model,
+            'name'                    => $this->name,
+            'removeSingleLabel'       => $this->removeSingleLabel(),
+            'results'                 => $this->results(),
+            'singleMode'              => $singleMode,          
+        ]);
     }
+    
+    /**
+     * Renders single preselected value result.
+     * @param array $data Preselected value data array
+     * @param boolean $singleMode Wheter to render hidden output field as 
+     * single one or as part of tabular data collection
+     */
+    protected function singleResult($data = [], $singleMode = false)
+    {
+        $result = $data;
+        if (empty($result['id'])) {
+            $result['id'] = uniqid();
+        }
+        if (empty($result['mark']) || !in_array($result['mark'], [0, 1])) {
+            $result['mark'] = 0;
+        }
+        if (empty($result['value']) || !is_string($result['value'])) {
+            $result['value'] = 'error: missing value key in data array';
+        }
+        if (isset($result['additional']) && $result['additional'] !== false) {
+            if (empty($result['additional']) || !is_string($result['additional'])) {
+                $result['additional'] = '';
+            }
+        }
+        else {
+            $result['additional'] = '';
+        }
 
+        if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
+            $result['removeLabel'] = $this->removeLabel;
+        }
+        else {
+            $result['removeLabel'] = $this->bootstrapDefaults['removeLabel'];
+        }
+
+        $result['arrayMode'] = '[]';
+        if ($singleMode) {
+            $result['arrayMode'] = '';
+        }
+
+        $result['htmlOptionsResult'] = $this->htmlOptionsResult($result['id']);
+        $result['htmlOptionsRemove'] = $this->htmlOptionsRemove($result['id']);
+        
+        $result['markBegin'] = $this->prepareOption('markBegin');
+        $result['markEnd']   = $this->prepareOption('markEnd');
+        
+        $result['model']     = $this->model;
+        $result['attribute'] = $this->attribute;
+        $result['name']      = $this->name;        
+        
+        return $result;
+    }
 }
