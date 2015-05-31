@@ -75,6 +75,9 @@ _array_ HTML options for the input text field.
 ## inputStyle
 _string_ Additional CSS style of the input text field.
 
+## jsEventsCallback
+_boolean_ Wheter adding or removing results with JS should trigger onRemove and onSelect callbacks, default true.
+
 ## keyTrigger
 _boolean_ Wheter pressing the key in filter field should trigger the dropdown list to open, default true.
 
