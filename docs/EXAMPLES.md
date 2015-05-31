@@ -196,6 +196,6 @@ Use the same parameter to send selected rows for post-validate state in case you
 
     use use yii\web\View;
 
-    $this->registerJs("jQuery('#addResults').click(function(){ jQuery('#model-field_id_ajaxDropDownWidget').trigger('add', [{id:1,value:\"new results 1\"}, {id:2,value:\"new result 2\",mark:1}]); })', View::POS_READY, 'addResult');
+    $this->registerJs("jQuery('#addResults').click(function(){ jQuery('#model-field_id_ajaxDropDownWidget').trigger('add', [{id:1,value:\"new results 1\"}, {id:2,value:\"new result 2\",mark:1}]); })", View::POS_READY, 'addResult');
 
     <button class="btn btn-danger" id="addResults">Add AjaxDropDown Results in field_id</button>
