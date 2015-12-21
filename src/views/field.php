@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.3
+ * @version 1.3.1
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
@@ -50,7 +50,7 @@ use yii\helpers\Html;
     <?= Html::endTag('div') . "\n"; ?>
     <?= Html::beginTag('ul', $htmlOptionsSelected) . "\n"; ?>
 <?php foreach ($results as $result): ?>
-        <?php $this->render('result', $result); ?>
+        <?= $this->render('result', $result); ?>
 <?php endforeach; ?>
     <?= Html::endTag('ul') . "\n"; ?>
 <?= Html::endTag('div') . "\n"; ?>
