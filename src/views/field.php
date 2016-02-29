@@ -2,24 +2,22 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.3.1
+ * @version 1.3.2
  * @license http://opensource.org/licenses/BSD-3-Clause
  */
 
 use yii\helpers\Html;
 
-?>
-
-<?= Html::beginTag('div', $htmlOptionsMain) . "\n"; ?>
-    <?= Html::beginTag('div', $htmlOptionsGroup) . "\n"; ?>
-        <?= Html::textInput(
+echo Html::beginTag('div', $htmlOptionsMain) . "\n";
+    echo Html::beginTag('div', $htmlOptionsGroup) . "\n";
+        echo Html::textInput(
                 !empty($defaults['inputName']) ? $defaults['inputName'] : '', 
                 $singleMode ? (!empty($data[0]['value']) ? str_replace('"', '', strip_tags($data[0]['value'])) : '') : '', 
                 $htmlOptionsInput
-            ) . "\n"; ?>
-<?php if ($singleMode): ?>
-<?php if (!empty($model)): ?>
-        <?= Html::activeHiddenInput(
+            ) . "\n";
+if ($singleMode):
+if (!empty($model)):
+        echo Html::activeHiddenInput(
                 $model, 
                 $attribute, 
                 [
@@ -27,31 +25,30 @@ use yii\helpers\Html;
                     'id'    => false, 
                     'class' => 'singleResult'
                 ]
-            ) . "\n"; ?>
-<?php else: ?>
-        <?= Html::hiddenInput(
+            ) . "\n";
+else:
+        echo Html::hiddenInput(
                 $name, 
                 !empty($data[0]['id']) ? $data[0]['id'] : '', 
                 [
                     'id'    => false, 
                     'class' => 'singleResult'
                 ]
-            ) . "\n"; ?>
-<?php endif; ?>
-<?php endif; ?>
-        <?= Html::beginTag('div', $htmlOptionsButtons) . "\n"; ?>
-<?php if (!empty($extraButtonLabel) || !empty($extraButtonOptions)): ?>
-            <?= Html::button(is_string($extraButtonLabel) ? $extraButtonLabel : '', $htmlOptionsExtraButton) . "\n"; ?>
-<?php endif; ?>
-            <?= Html::button($buttonLabel, $htmlOptionsButton) . "\n"; ?>
-            <?= Html::button($removeSingleLabel, $htmlOptionsRemoveSingle) . "\n"; ?>
-            <?= Html::tag('ul', '', $htmlOptionsResults) . "\n"; ?>
-        <?= Html::endTag('div') . "\n"; ?>
-    <?= Html::endTag('div') . "\n"; ?>
-    <?= Html::beginTag('ul', $htmlOptionsSelected) . "\n"; ?>
-<?php foreach ($results as $result): ?>
-        <?= $this->render('result', $result); ?>
-<?php endforeach; ?>
-    <?= Html::endTag('ul') . "\n"; ?>
-<?= Html::endTag('div') . "\n"; ?>
-
+            ) . "\n";
+endif;
+endif;
+        echo Html::beginTag('div', $htmlOptionsButtons) . "\n";
+if (!empty($extraButtonLabel) || !empty($extraButtonOptions)):
+            echo Html::button(is_string($extraButtonLabel) ? $extraButtonLabel : '', $htmlOptionsExtraButton) . "\n";
+endif;
+            echo Html::button($buttonLabel, $htmlOptionsButton) . "\n";
+            echo Html::button($removeSingleLabel, $htmlOptionsRemoveSingle) . "\n";
+            echo Html::tag('ul', '', $htmlOptionsResults) . "\n";
+        echo Html::endTag('div') . "\n";
+    echo Html::endTag('div') . "\n";
+    echo Html::beginTag('ul', $htmlOptionsSelected) . "\n";
+foreach ($results as $result):
+        echo $this->render('result', $result);
+endforeach;
+    echo Html::endTag('ul') . "\n";
+echo Html::endTag('div') . "\n";

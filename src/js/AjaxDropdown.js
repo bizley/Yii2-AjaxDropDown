@@ -1,5 +1,5 @@
 /*!
- * AjaxDropDown v1.3.1
+ * AjaxDropDown v1.3.2
  * Pawel Bizley Brzozowski
  * https://github.com/bizley-code/Yii2-AjaxDropDown
  * http://www.yiiframework.com/extension/yii2-ajaxdropdown

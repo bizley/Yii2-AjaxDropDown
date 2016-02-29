@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @author Paweł Bizley Brzozowski
- * @version 1.3.1
- * @license http://opensource.org/licenses/BSD-3-Clause
- */
-
 namespace bizley\ajaxdropdown;
 
 use bizley\ajaxdropdown\assets\AjaxDropdownAsset;
@@ -15,8 +9,8 @@ use yii\helpers\Json;
 use Yii;
 
 /**
- * AjaxDropDown is the Yii 2 widget for rendering the dropdown menu with the AJAX
- * data source.
+ * AjaxDropDown is the Yii 2 widget for rendering the dropdown menu with 
+ * the AJAX data source.
  * https://github.com/bizley-code/Yii2-AjaxDropDown
  * http://www.yiiframework.com/extension/yii2-ajaxdropdown
  *
@@ -28,23 +22,27 @@ use Yii;
  *
  * For Yii 1.1 version of this widget see
  * https://github.com/bizley-code/Yii-AjaxDropDown
+ * 
+ * @author Paweł Bizley Brzozowski
+ * @version 1.3.2
+ * @license http://opensource.org/licenses/BSD-3-Clause
  */
 class AjaxDropdown extends Widget
 {
 
     /**
      * @var string Additional HTML code for the selected value row, default ''.
-     * Any 'additional' key in [[data]] parameter element will replace this.
+     * Any 'additional' key in $data parameter element will replace this.
      * Any {VALUE} and {ID} tags here are automatically replaced with selected 
      * id and value of the row.
-     * @see [[data]]
+     * @see $data
      */
     public $additionalCode = '';
 
     /**
      * @var string The attribute associated with this widget.
      * The square brackets ('[]') are added automatically to collect tabular 
-     * data input when [[singleMode]] parameter is set to false (default).
+     * data input when $singleMode parameter is set to false (default).
      */
     public $attribute;
 
@@ -87,8 +85,8 @@ class AjaxDropdown extends Widget
      * If not 0 and not 1 'mark' is set to 0.
      * If empty 'value' is set to 'error: missing value key in data array'.
      * There is the optional parameter 'additional' with HTML code to be 
-     * inserted in the selected row. If given this replaces [[additionalCode]] 
-     * for that row only. In case you want to remove the [[additionalCode]] only 
+     * inserted in the selected row. If given this replaces $additionalCode 
+     * for that row only. In case you want to remove the $additionalCode only 
      * for that row set the 'additional' key to false.
      */
     public $data;
@@ -96,13 +94,13 @@ class AjaxDropdown extends Widget
     /**
      * @var integer Delay between last key pressed and dropdown list opened 
      * in milliseconds, default 300. This option works only for 
-     * [[keyTrigger]] = true.
+     * $keyTrigger = true.
      * @since 1.2
      */
     public $delay = 300;
 
     /**
-     * @var boolean Wheter to add Bootstrap class 'dropup' to trigger dropdown 
+     * @var boolean Whether to add Bootstrap class 'dropup' to trigger dropdown 
      * menu above the button, default false.
      */
     public $dropup = false;
@@ -174,14 +172,14 @@ class AjaxDropdown extends Widget
     public $inputStyle;
 
     /**
-     * @var boolean Wheter adding or removing results with JS should trigger 
+     * @var boolean Whether adding or removing results with JS should trigger 
      * onRemove and onSelect callbacks, default true.
      * @since 1.3
      */
     public $jsEventsCallback = true;
     
     /**
-     * @var boolean Wheter pressing the key in filter field should trigger the 
+     * @var boolean Whether pressing the key in filter field should trigger the 
      * dropdown list to open, default true.
      * @since 1.2
      */
@@ -201,7 +199,7 @@ class AjaxDropdown extends Widget
 
     /**
      * @var array Array of translated strings used in widgets, default [].
-     * @see [[defaultLocal]]
+     * @see $defaultLocal
      */
     public $local = [];
 
@@ -240,7 +238,7 @@ class AjaxDropdown extends Widget
     public $model;
 
     /**
-     * @var string Widget name. This must be set if [[model]] is not set.
+     * @var string Widget name. This must be set if $model is not set.
      */
     public $name;
 
@@ -258,7 +256,8 @@ class AjaxDropdown extends Widget
 
     /**
      * @var string HTML string of the ending of the 'next' link on the 
-     * results list, default ' <span class="glyphicon glyphicon-chevron-right"></span></small>'.
+     * results list, default 
+     * ' <span class="glyphicon glyphicon-chevron-right"></span></small>'.
      */
     public $nextEnd;
 
@@ -433,13 +432,13 @@ class AjaxDropdown extends Widget
     public $selectedStyle;
 
     /**
-     * @var boolean Wheter to set widget in mode that allows only one selected 
+     * @var boolean Whether to set widget in mode that allows only one selected 
      * value or more, default false.
      */
     public $singleMode = false;
 
     /**
-     * @var boolean Wheter to display singleMode result underneath the widget 
+     * @var boolean Whether to display singleMode result underneath the widget 
      * or in the filter input field, default false.
      * @since 1.2
      */
@@ -503,7 +502,7 @@ class AjaxDropdown extends Widget
 
     /**
      * @var array Default English widget texts.
-     * {NUM} tag is automatically replaced with value of [[minQuery]] in the 
+     * {NUM} tag is automatically replaced with value of $minQuery in the 
      * 'minimumCharacters' element.
      */
     protected $defaultLocal = [
@@ -544,9 +543,7 @@ class AjaxDropdown extends Widget
         if (!empty($this->buttonLabel) && is_string($this->buttonLabel)) {
             return $this->buttonLabel;
         }
-        else {
-            return $this->bootstrapDefaults['buttonLabel'];
-        }
+        return $this->bootstrapDefaults['buttonLabel'];
     }
 
     /**
@@ -560,17 +557,16 @@ class AjaxDropdown extends Widget
 
     /**
      * Sets dropdown triggering button HTML options.
-     * @param boolean $hide Wheter this button should be hidden
+     * @param boolean $hide Whether this button should be hidden
      * @return array
      */
     protected function htmlOptionsButton($hide = false)
     {
-        $options = [
-            'type'        => 'button',
-            'data-toggle' => 'dropdown',
-            'data-page'   => 1
-        ];
-        return $this->htmlOptionsSet('button', $options, $hide ? 'display:none;' : '');
+        return $this->htmlOptionsSet('button', [
+                'type'        => 'button',
+                'data-toggle' => 'dropdown',
+                'data-page'   => 1
+            ], $hide ? 'display:none;' : '');
     }
 
     /**
@@ -588,10 +584,9 @@ class AjaxDropdown extends Widget
      */
     protected function htmlOptionsExtraButton()
     {
-        $options = !empty($this->extraButtonOptions) && is_array($this->extraButtonOptions) ? $this->extraButtonOptions : [];
         return array_merge(
                 ['type' => 'button'],
-                $options
+                !empty($this->extraButtonOptions) && is_array($this->extraButtonOptions) ? $this->extraButtonOptions : []
             );
     }
 
@@ -614,11 +609,9 @@ class AjaxDropdown extends Widget
         if (!empty($this->bootstrapDefaults['groupStyle'])) {
             $style .= $this->bootstrapDefaults['groupStyle'];
         }
-
         if (!empty($this->groupClass) && is_string($this->groupClass)) {
             $class .= ' ' . $this->groupClass;
         }
-
         if (!empty($this->groupStyle) && is_string($this->groupStyle)) {
             $style .= ' ' . $this->groupStyle;
         }
@@ -631,7 +624,7 @@ class AjaxDropdown extends Widget
 
     /**
      * Sets input text field HTML options.
-     * @param boolean $disabled Wheter this field should be disabled
+     * @param boolean $disabled Whether this field should be disabled
      * @return array
      */
     protected function htmlOptionsInput($disabled = false)
@@ -668,7 +661,7 @@ class AjaxDropdown extends Widget
     
     /**
      * Sets dropdown triggering button HTML options.
-     * @param boolean $show Wheter this button should be shown
+     * @param boolean $show Whether this button should be shown
      * @return array
      * @since 1.2
      */
@@ -746,11 +739,9 @@ class AjaxDropdown extends Widget
         if (!empty($this->bootstrapDefaults[$name . 'Style'])) {
             $style .= $this->bootstrapDefaults[$name . 'Style'];
         }
-
         if (!empty($this->{$name . 'Class'}) && is_string($this->{$name . 'Class'})) {
             $class .= ' ' . $this->{$name . 'Class'};
         }
-
         if (!empty($this->{$name . 'Style'}) && is_string($this->{$name . 'Style'})) {
             $style .= ' ' . $this->{$name . 'Style'};
         }
@@ -763,12 +754,10 @@ class AjaxDropdown extends Widget
         if (count($additional)) {
             $return = array_merge($return, $additional);
         }
-        
         if ($appendStyle != '') {
             if (!empty($return['style'])) {
                 $return['style'] .= (substr(trim($return['style']), -1) != ';' ? ';' : '') . $appendStyle;
-            }
-            else {
+            } else {
                 $return['style'] = $appendStyle;
             }
         }
@@ -786,9 +775,7 @@ class AjaxDropdown extends Widget
         if (!empty($this->$name) && is_string($this->$name)) {
             return $this->$name;
         }
-        else {
-            return !empty($this->bootstrapDefaults[$name]) ? $this->bootstrapDefaults[$name] : '';
-        }
+        return !empty($this->bootstrapDefaults[$name]) ? $this->bootstrapDefaults[$name] : '';
     }
 
     /**
@@ -810,7 +797,7 @@ class AjaxDropdown extends Widget
     {
         $value = 0;
         if (is_numeric($this->delay) && $this->delay > 0) {
-            $value = (int) $this->delay;
+            $value = (int)$this->delay;
         }
         return $value;
     }
@@ -821,13 +808,12 @@ class AjaxDropdown extends Widget
      */
     protected function prepareOptionLocal()
     {
-        $local = !empty($this->defaultLocal) ? $this->defaultLocal : [];
-        if (!empty($this->local) && is_array($this->local)) {
-            foreach ($this->local as $key => $value) {
-                if (!empty($value) && is_string($value)) {
-                    $local[$key] = Yii::t($this->translateCategory, $value);
-                }
+        $local = $this->defaultLocal;
+        foreach ($local as $key => $value) {
+            if (!empty($this->local[$key]) && is_string($this->local[$key])) {
+                $value = $this->local[$key];
             }
+            $local[$key] = Yii::t($this->translateCategory, $value);
         }
 
         $shortlocal = [];
@@ -843,8 +829,7 @@ class AjaxDropdown extends Widget
         foreach ($local as $key => $value) {
             if (isset($shortNames[$key])) {
                 $shortlocal[$shortNames[$key]] = $value;
-            }
-            else {
+            } else {
                 $shortlocal[$key] = $value;
             }
         }
@@ -870,9 +855,7 @@ class AjaxDropdown extends Widget
         if (!empty($this->progressBar) && is_string($this->progressBar)) {
             return strtr($this->progressBar, ['{LOADING}' => Yii::t($this->translateCategory, 'Loading')]);
         }
-        else {
-            return !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], ['{LOADING}' => Yii::t($this->translateCategory, 'Loading')]) : '';
-        }
+        return !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], ['{LOADING}' => Yii::t($this->translateCategory, 'Loading')]) : '';
     }
 
     /**
@@ -935,7 +918,7 @@ class AjaxDropdown extends Widget
      */
     public function registerScript($id, $name)
     {
-        $view    = $this->getView();
+        $view = $this->getView();
         AjaxDropdownAsset::register($view);
         $options = Json::encode($this->prepareOptions($name));
         $view->registerJs("jQuery('#$id').ajaxDropDown($options);");
@@ -951,30 +934,31 @@ class AjaxDropdown extends Widget
         if (!empty($this->removeSingleLabel) && is_string($this->removeSingleLabel)) {
             return $this->removeSingleLabel;
         }
-        else {
-            return $this->bootstrapDefaults['removeSingleLabel'];
-        }
+        return $this->bootstrapDefaults['removeSingleLabel'];
     }
 
+    /**
+     * Resolves name and ID.
+     * @return array
+     * @throws \yii\base\Exception
+     */
     protected function resolveNameID()
     {
         if ($this->name !== null) {
             $name = $this->name;
             $id   = $this->name;
-        }
-        elseif ($this->hasModel()) {
+        } elseif ($this->hasModel()) {
             $name = Html::getInputName($this->model, $this->attribute);
             $id   = Html::getInputId($this->model, $this->attribute);
+        } else {
+            throw new \yii\base\Exception('Class must specify "model" and "attribute" or "name" property values.');
         }
-        else {
-            throw new \yii\base\Exception('class must specify "model" and "attribute" or "name" property values.');
-        }
-
         return [$name, $id];
     }
     
     /**
      * Renders the preselected data values.
+     * @return array
      */
     protected function results()
     {
@@ -987,8 +971,7 @@ class AjaxDropdown extends Widget
                         return [$this->singleResult($this->data[0], $this->singleMode)];
                     }
                 }
-            }
-            else {
+            } else {
                 foreach ($this->data as $data) {
                     $results[] = $this->singleResult($data, $this->singleMode);
                 }
@@ -1000,6 +983,7 @@ class AjaxDropdown extends Widget
     
     /**
      * Renders the widget.
+     * @return string
      */
     public function run()
     {
@@ -1042,8 +1026,9 @@ class AjaxDropdown extends Widget
     /**
      * Renders single preselected value result.
      * @param array $data Preselected value data array
-     * @param boolean $singleMode Wheter to render hidden output field as 
+     * @param boolean $singleMode Whether to render hidden output field as 
      * single one or as part of tabular data collection
+     * @return array
      */
     protected function singleResult($data = [], $singleMode = false)
     {
@@ -1061,15 +1046,12 @@ class AjaxDropdown extends Widget
             if (empty($result['additional']) || !is_string($result['additional'])) {
                 $result['additional'] = '';
             }
-        }
-        else {
+        } else {
             $result['additional'] = '';
         }
-
         if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
             $result['removeLabel'] = $this->removeLabel;
-        }
-        else {
+        } else {
             $result['removeLabel'] = $this->bootstrapDefaults['removeLabel'];
         }
 
