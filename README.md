@@ -1,4 +1,9 @@
 # Yii2-AjaxDropDown
+
+![Latest Stable Version](https://img.shields.io/packagist/v/bizley/ajaxdropdown.svg)
+![Total Downloads](https://img.shields.io/packagist/dt/bizley/ajaxdropdown.svg)
+![License](https://img.shields.io/packagist/l/bizley/ajaxdropdown.svg)
+
 Yii 2.0 dropdown widget with AJAX data
 
 AjaxDropDown allows to use dropdown menu to select one or more values in your form. Dropdown data is sent using the AJAX post method.
