@@ -5,20 +5,30 @@
     "keywords": ["yii2", "widget", "ajaxdropdown", "bootstrap", "ajax", "dropdown"],
     "license": "BSD-3-Clause",
     "support": {
-        "source": "https://github.com/bizley-code/Yii2-AjaxDropDown"
+        "source": "https://github.com/bizley/Yii2-AjaxDropDown",
+        "issues": "https://github.com/bizley/yii2-AjaxDropDown/issues"
     },
     "authors": [
         {
-            "name": "Pawel Bizley Brzozowski",
-            "email": "pb@human-device.com"
+            "name": "Paweł Bizley Brzozowski",
+            "email": "pawel@positive.codes"
         }
     ],
     "require": {
         "yiisoft/yii2": "*"
     },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "bizley\\ajaxdropdown\\": "src/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }

@@ -1,12 +1,11 @@
 /*!
- * AjaxDropDown v1.3.2
- * Pawel Bizley Brzozowski
- * https://github.com/bizley-code/Yii2-AjaxDropDown
- * http://www.yiiframework.com/extension/yii2-ajaxdropdown
+ * AjaxDropDown v1.3.3
+ * Paweł Bizley Brzozowski
+ * https://github.com/bizley/Yii2-AjaxDropDown
  */
 (function ($) {
     $.fn.ajaxDropDown = function (options) {
-        var set = $.extend(true, {
+        let set = $.extend(true, {
             addc: '', dely: 300, ercl: '', erst: '', hecl: '', hest: '', 
             jsev: true, keyt: true, locl: '', lost: '', mabe: '', maen: '', 
             minq: 0, name: 'ajaxDropDown', nebe: '', necl: '', neen: '', 
@@ -24,83 +23,83 @@
                 nrec: 'No matching records found'
             }
         }, options);
-        var accl = 'active';
-        var ajRec = ' ajaxDropDownRecord';
-        var ali = '</a></li>';
-        var aNext = 'a.ajaxDropDownNext';
-        var aPrev = 'a.ajaxDropDownPrev';
-        var buttSR = 'button.ajaxDropDownSingleRemove';
-        var buttTogg = 'button.ajaxDropDownToggle';
-        var dataId = '><a href="#" class="ajaxDropDownResult" data-id="';
-        var dicl = 'disabled';
-        var hicl = 'hidden';
-        var inpTxt = 'input[type=text]';
-        var li = '</li>';
-        var lih = '<li class="dropdown-header';
-        var liPage = 'li.ajaxDropDownPage';
-        var liPages = 'li.ajaxDropDownPages';
-        var liPagesAll = '<li class="ajaxDropDownPages ajaxDropDownPage';
-        var liSel = 'li.ajaxDropDownSelected';
-        var spNum = 'span.ajaxDropDownPageNumber';
-        var st = ' style="';
-        var ulMenu = 'ul.ajaxDropDownMenu';
-        var timeOut = null;
-        var selection = [];
-        var onRemove = new Function('id', 'selection', set.onrm);
-        var onSelect = new Function('id', 'label', 'selection', set.onsl);
-        var rearrange = function(id) {
-            var rearrSelection = [];
-            for (var i in selection) {
+        let accl = 'active';
+        let ajRec = ' ajaxDropDownRecord';
+        let ali = '</a></li>';
+        let aNext = 'a.ajaxDropDownNext';
+        let aPrev = 'a.ajaxDropDownPrev';
+        let buttSR = 'button.ajaxDropDownSingleRemove';
+        let buttTogg = 'button.ajaxDropDownToggle';
+        let dataId = '><a href="#" class="ajaxDropDownResult" data-id="';
+        let dicl = 'disabled';
+        let hicl = 'hidden';
+        let inpTxt = 'input[type=text]';
+        let li = '</li>';
+        let lih = '<li class="dropdown-header';
+        let liPage = 'li.ajaxDropDownPage';
+        let liPages = 'li.ajaxDropDownPages';
+        let liPagesAll = '<li class="ajaxDropDownPages ajaxDropDownPage';
+        let liSel = 'li.ajaxDropDownSelected';
+        let spNum = 'span.ajaxDropDownPageNumber';
+        let st = ' style="';
+        let ulMenu = 'ul.ajaxDropDownMenu';
+        let timeOut = null;
+        let selection = [];
+        let onRemove = new Function('id', 'selection', set.onrm);
+        let onSelect = new Function('id', 'label', 'selection', set.onsl);
+        let rearrange = function(id) {
+            let rearrSelection = [];
+            for (let i in selection) {
                 if (selection[i].id != id) {
                     rearrSelection.push(selection[i]);
                 }
             }
             selection = rearrSelection;
         };
-        var isin = function(id) {
-            for (var i in selection) {
+        let isin = function(id) {
+            for (let i in selection) {
                 if (selection[i].id == id) {
                     return true;
                 }
             }
             return false;
         };
-        var res = this.find('ul.ajaxDropDownResults');
-        var rem = this.find(buttSR);
-        var ul = this.find(ulMenu);
-        var tx = this.find(inpTxt);
-        var bt = this.find(buttTogg);
-        var btns = this.find('div.ajaxDropDownButtons');
-        var prba = '<li class="ajaxDropDownLoading';
+        let res = this.find('ul.ajaxDropDownResults');
+        let rem = this.find(buttSR);
+        let ul = this.find(ulMenu);
+        let tx = this.find(inpTxt);
+        let bt = this.find(buttTogg);
+        let btns = this.find('div.ajaxDropDownButtons');
+        let prba = '<li class="ajaxDropDownLoading';
         if (set.locl !== '') prba += ' ' + set.locl;
         prba += '"';
         if (set.lost !== '') prba += st + set.lost + '"';
         prba += '>' + set.prba + li;
-        var headerStart = lih;
+        let headerStart = lih;
         if (set.hecl !== '') headerStart += ' ' + set.hecl;
         headerStart += '"';
         if (set.hest !== '') headerStart += st + set.hest + '"';
         headerStart += '>';
-        var headerMinimumCharacters = set.loca.mcha.replace(/{NUM}/g, set.minq);
-        var erro = lih;
+        let headerMinimumCharacters = set.loca.mcha.replace(/{NUM}/g, set.minq);
+        let erro = lih;
         if (set.ercl !== '') erro += ' ' + set.ercl;
         erro += '"';
         if (set.erst !== '') erro += st + set.erst + '"';
         erro += '>' + set.loca.erro + li;
-        var nrec = lih;
+        let nrec = lih;
         if (set.nrcl !== '') nrec += ' ' + set.nrcl;
         nrec += '"';
         if (set.nrst !== '') nrec += st + set.nrst + '"';
         nrec += '>' + set.loca.nrec + li;
-        var loadData = function(){
+        let loadData = function(){
             if (ul.find(liPages).length === 0) {
-                var page = bt.data('page');
+                let page = bt.data('page');
                 page = page * 1;
-                var search = false;
-                var hst = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
-                var header = hst;
+                let search = false;
+                let hst = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
+                let header = hst;
                 header += set.paen + set.loca.allr + '</li><li class="divider"></li>' + prba;
-                var query = tx.val();
+                let query = tx.val();
                 if (query.length > 0) {
                     if (query.length >= set.minq) {
                         header = hst;
@@ -119,7 +118,7 @@
                             console.log('jQuery post failed');
                         }).
                         done(function(data){
-                            var results = $.parseJSON(data);
+                            let results = $.parseJSON(data);
                             if (results.total === undefined) results.total = 1;
                             if (results.page === undefined) results.page = 1;
                             if (results.data === undefined) {
@@ -129,8 +128,8 @@
                             else {
                                 if (results.data.length) {
                                     ul.find('span.ajaxDropDownTotalPages').text(results.total);
-                                    for (var i in results.data) {
-                                        var result = liPagesAll + results.page + ajRec + results.data[i].id;
+                                    for (let i in results.data) {
+                                        let result = liPagesAll + results.page + ajRec + results.data[i].id;
                                         if (set.recl !== '') result += ' ' + set.recl;
                                         if (ul.parent().parent().parent().find(liSel + results.data[i].id).length) result += ' ' + accl;
                                         result += '"';
@@ -143,7 +142,7 @@
                                         ul.append(result);
                                     }
                                     if (results.total > 1) {
-                                        var pages = '<li class="divider ajaxDropDownInfo"></li><li class="ajaxDropDownInfo';
+                                        let pages = '<li class="divider ajaxDropDownInfo"></li><li class="ajaxDropDownInfo';
                                         if (set.swcl !== '') pages += ' ' + set.swcl;
                                         pages += '"';
                                         if (set.swst !== '') pages += st + set.swst + '"';
@@ -178,7 +177,7 @@
             e.stopPropagation();
             ul.find(aPrev).removeClass(dicl);
             ul.find(aNext).addClass(dicl);
-            var page = bt.data('page');
+            let page = bt.data('page');
             page = page * 1 + 1;
             if (ul.find(liPage + page).length) {
                 ul.find(liPages).addClass(hicl);
@@ -186,14 +185,14 @@
                 ul.find(aNext).removeClass(dicl);
             }
             else {
-                var query = tx.val();
+                let query = tx.val();
                 $.post(set.url, {query:query, page:page}).
                     fail(function(){
                         ul.append(erro);
                         console.log('jQuery post failed');
                     }).
                     done(function(data){
-                        var results = $.parseJSON(data);
+                        let results = $.parseJSON(data);
                         if (results.data === undefined) {
                             ul.append(erro);
                             console.log('No data element in results object', data);
@@ -203,8 +202,8 @@
                                 ul.find(liPages).addClass(hicl);
                                 if (results.total === undefined) results.total = 1;
                                 if (results.page === undefined) results.page = 1;
-                                for (var i in results.data) {
-                                    var result = liPagesAll + results.page + ajRec + results.data[i].id;
+                                for (let i in results.data) {
+                                    let result = liPagesAll + results.page + ajRec + results.data[i].id;
                                     if (set.recl !== '') result += ' ' + set.recl;
                                     if (ul.parent().parent().parent().find(liSel + results.data[i].id).length) result += ' ' + accl;
                                     result += '"';
@@ -231,7 +230,7 @@
             e.stopPropagation();
             ul.find(aNext).removeClass(dicl);
             ul.find(aPrev).addClass(dicl);
-            var page = bt.data('page');
+            let page = bt.data('page');
             page = page * 1 - 1;
             if (page < 1) page = 1;
             ul.find(liPages).addClass(hicl);
@@ -253,9 +252,9 @@
         });
         this.on('click', 'a.ajaxDropDownResult', function(e){
             e.preventDefault();
-            var id = $(this).data('id');
-            var label = $(this).html();
-            var arrayMode = '[]';
+            let id = $(this).data('id');
+            let label = $(this).html();
+            let arrayMode = '[]';
             if (set.smod) {
                 res.html('');
                 selection = [];
@@ -285,7 +284,7 @@
                 }
                 else {
                     $(this).parent().addClass(accl);
-                    var selected = '<li class="ajaxDropDownSelected' + id;
+                    let selected = '<li class="ajaxDropDownSelected' + id;
                     if (set.rscl !== '') selected += ' ' + set.rscl;
                     selected += '"';
                     if (set.rsst !== '') selected += st + set.rsst + '"';
@@ -295,7 +294,7 @@
                     if (set.rmst !== '') selected += st + set.rmst + '"';
                     selected += ' data-id="' + id + '">' + set.rmla + '</a>';
                     if (set.addc !== '') {
-                        var addcr = set.addc.replace(/{ID}/g, id);
+                        let addcr = set.addc.replace(/{ID}/g, id);
                         addcr = addcr.replace(/{VALUE}/g, label);
                         selected += addcr;
                     }
@@ -308,7 +307,7 @@
         });
         this.on('click', 'a.ajaxDropDownRemove', function(e){
             e.preventDefault();
-            var id = $(this).data('id');
+            let id = $(this).data('id');
             $(this).parent().parent().parent().find('li.ajaxDropDownRecord' + id).removeClass(accl);
             $(this).parent().remove();
             rearrange(id);
@@ -316,8 +315,8 @@
         });
         this.on('click', buttSR, function(e){
             e.preventDefault();
-            var singleRes = $(this).parent().parent().find('input.singleResult');
-            var id = singleRes.val();
+            let singleRes = $(this).parent().parent().find('input.singleResult');
+            let id = singleRes.val();
             singleRes.remove();
             tx.prop('disabled', false);
             tx.val('');
@@ -327,27 +326,27 @@
             onRemove(id, selection);
         });
         this.on('add', function(){
-            var arrayMode = '[]';
-            var selected = '';
+            let arrayMode = '[]';
+            let selected = '';
             if (set.smod) {
                 res.html('');
                 selection = [];
                 arrayMode = '';
             }
-            for (var i in arguments) {
+            for (let i in arguments) {
                 if (i == 0) continue;
                 if (arguments[i].id === undefined) {
                     console.log('No id element in data object', arguments[i]);
                 }
                 else {
-                    var id = arguments[i].id;
+                    let id = arguments[i].id;
                     if (!isin(id)) {
-                        var value = '';
+                        let value = '';
                         if (arguments[i].value !== undefined) value = arguments[i].value;
-                        var mark = 0;
+                        let mark = 0;
                         if (arguments[i].mark == 1) mark = 1;
                         if (mark) value = set.mabe + value + set.maen;
-                        var additional = set.addc;
+                        let additional = set.addc;
                         if (arguments[i].additional === false) additional = '';
                         else if (arguments[i].additional !== undefined) additional = arguments[i].additional;
                         if (set.smod && set.addc === '' && !set.smbt) {
@@ -365,7 +364,7 @@
                             if (set.jsev) onSelect(id, value, selection);
                         }
                         else {
-                            var selected = '<li class="ajaxDropDownSelected' + id;
+                            let selected = '<li class="ajaxDropDownSelected' + id;
                             if (set.rscl !== '') selected += ' ' + set.rscl;
                             selected += '"';
                             if (set.rsst !== '') selected += st + set.rsst + '"';
@@ -375,7 +374,7 @@
                             if (set.rmst !== '') selected += st + set.rmst + '"';
                             selected += ' data-id="' + id + '">' + set.rmla + '</a>';
                             if (additional !== '') {
-                                var addcr = additional.replace(/{ID}/g, id);
+                                let addcr = additional.replace(/{ID}/g, id);
                                 addcr = addcr.replace(/{VALUE}/g, value);
                                 selected += addcr;
                             }
@@ -396,13 +395,13 @@
             }
         });
         this.on('removeOne', function(){
-            for (var i in arguments) {
+            for (let i in arguments) {
                 if (i == 0) continue;
                 if (isNaN(arguments[i])) {
                     console.log('id is not a number', arguments[i]);
                 }
                 else {
-                    var id = arguments[i];
+                    let id = arguments[i];
                     if (isin(id)) {
                         res.find(liSel + id).remove();
                         rearrange(id);
